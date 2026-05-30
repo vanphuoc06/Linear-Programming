@@ -1,0 +1,23 @@
+{
+  "version": 2,
+  "builds": [
+    {
+      "src": "Linear-Programming-master/api/main.py",
+      "use": "@vercel/python"
+    },
+    {
+      "src": "Linear-Programming-master/frontend/package.json",
+      "use": "@vercel/next"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/api/(.*)",
+      "dest": "Linear-Programming-master/api/main.py"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "Linear-Programming-master/frontend/$1"
+    }
+  ]
+}
