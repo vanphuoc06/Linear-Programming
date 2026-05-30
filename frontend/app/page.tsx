@@ -6,66 +6,13 @@ import TableauSteps from "@/components/TableauSteps";
 import Chart2D from "@/components/Chart2D";
 import { SolveResult } from "@/types";
 
-const METHODS = [
-  {
-    id: "standard" as const,
-    label: "Đơn hình",
-    sub: "Standard Simplex",
-    color: "#6366f1",
-  },
-  {
-    id: "bland" as const,
-    label: "Đơn hình Bland",
-    sub: "Bland's Rule",
-    color: "#10b981",
-  },
-  {
-    id: "two-phase" as const,
-    label: "Đơn hình 2 pha",
-    sub: "Two-Phase",
-    color: "#f59e0b",
-  },
-];
+
 
 export default function Home() {
   const [result, setResult] = useState<SolveResult | null>(null);
   const [loading, setLoading] = useState(false);
   const [nVars, setNVars] = useState(2);
   const [method, setMethod] = useState<"standard" | "bland" | "two-phase">("standard");
-  // Keep a ref to the last solve payload so we can re-solve with a different method
-  const [lastPayload, setLastPayload] = useState<object | null>(null);
-
-  const resolveWith = async (newMethod: "standard" | "bland" | "two-phase") => {
-    if (!lastPayload) return;
-    setMethod(newMethod);
-    setLoading(true);
-    try {
-      const body = { ...(lastPayload as any), method: newMethod };
-      const res = await fetch("/api/solve", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(body),
-      });
-      
-      const text = await res.text();
-      if (text.startsWith("<!DOCTYPE") || text.startsWith("<html")) {
-        throw new Error("Không thể kết nối đến Backend (API Server). Lỗi hệ thống trả về trang HTML.");
-      }
-      
-      const data: SolveResult = JSON.parse(text);
-      if (!res.ok) {
-        throw new Error((data as any).detail || "Lỗi server.");
-      }
-      const p = lastPayload as any;
-      data.c = p.c;
-      data.constraints = p.constraints;
-      setResult(data);
-    } catch {
-      // silently ignore, InputForm already handles errors
-    } finally {
-      setLoading(false);
-    }
-  };
 
   return (
     <div style={{ minHeight: "100vh", background: "var(--bg)" }}>
@@ -126,7 +73,7 @@ export default function Home() {
         <div style={{ display: "grid", gridTemplateColumns: "minmax(0,1fr) minmax(0,1.2fr)", gap: 24 }}>
           {/* Left: Input */}
           <InputForm
-            onResult={(r, n, payload) => { setResult(r); setNVars(n); setLastPayload(payload); }}
+            onResult={(r, n) => { setResult(r); setNVars(n); }}
             setLoading={setLoading}
             loading={loading}
             method={method}
@@ -148,6 +95,7 @@ export default function Home() {
             )}
 
             {!loading && result && (
+              <>
                 <ResultPanel result={result} />
                 {nVars === 2 && result.status === "optimal" && (
                   <Chart2D result={result} />

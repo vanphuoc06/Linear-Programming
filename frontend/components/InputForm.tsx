@@ -2,7 +2,7 @@
 import { useState } from "react";
 import { Constraint, SolveResult } from "@/types";
 interface Props {
-  onResult: (result: SolveResult, nVars: number, payload: object) => void;
+  onResult: (result: SolveResult, nVars: number) => void;
   setLoading: (v: boolean) => void;
   loading: boolean;
   method: "standard" | "bland" | "two-phase";
@@ -104,7 +104,7 @@ export default function InputForm({ onResult, setLoading, loading, method, setMe
         type: con.type,
         rhs: Number(con.rhs),
       }));
-      onResult(data, nVars, body);
+      onResult(data, nVars);
     } catch (e: any) {
       setErrors([e.message || "Không thể kết nối tới server. Hãy đảm bảo backend đang chạy."]);
     } finally {
