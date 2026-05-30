@@ -154,27 +154,6 @@ def solve(req: SolveRequest):
         result["message"] = auto_note + " | " + (result.get("message") or "")
         result["auto_upgraded_method"] = effective_method
 
-    # ── Tự động retry bằng Bland khi Cycling (giống QHTT dòng 478-490) ──
-    if result.get("status") == "cycling" and effective_method in ("standard", "two-phase"):
-        try:
-            solver_bland = SimplexSolver(
-                c=req.c,
-                constraints=constraints_dict,
-                objective=req.objective,
-                bounds=req.bounds,
-                method="bland",
-            )
-            result_bland = solver_bland.solve()
-            if result_bland.get("status") != "cycling":
-                result = result_bland
-                result["message"] = (
-                    "[Tự động Bland — đã khắc phục xoay vòng] "
-                    + (result_bland.get("message") or "")
-                )
-                result["auto_upgraded_method"] = "bland"
-        except Exception:
-            pass  # Giữ kết quả cycling gốc nếu Bland cũng lỗi
-
     if n == 2 and req.method != "graphical":
         try:
             # Lấy thông tin đồ thị (geometry) để vẽ đường đi của các điểm từ vựng
@@ -185,51 +164,51 @@ def solve(req: SolveRequest):
                 bounds=req.bounds,
                 method="graphical"
             )
-            gs.solve()
-            if gs.steps and gs.steps[-1].get("phase") == "graphical":
-                graph_step = gs.steps[-1]
+            gs_res = gs.solve()
+            gs_steps = gs_res.get("steps", [])
+            
+            if gs_steps and gs_steps[-1].get("phase") == "graphical":
+                graph_step = gs_steps[-1]
                 
                 # 1. Trích xuất đường đi từ Simplex
                 simplex_path = []
-                used_names = set()
                 
                 for step in result.get("steps", []):
-                    if "point_coords" in step and "point_str" in step:
+                    if "point_coords" in step:
                         coords = step["point_coords"]
-                        name_str = step["point_str"].split('(')[0]
                         simplex_path.append({
-                            "name": name_str,
+                            "name": "",
                             "x1": coords[0],
                             "x2": coords[1]
                         })
-                        used_names.add(name_str)
                 
-                # 2. Đổi tên các đỉnh trong đồ thị cho khớp với Simplex
+                # 2. Đổi tên các đỉnh trong đồ thị
                 vertices = graph_step.get("vertices", [])
                 
-                for v in vertices:
-                    v_matched = False
-                    for p in simplex_path:
-                        if abs(v["x1"] - p["x1"]) < 1e-5 and abs(v["x2"] - p["x2"]) < 1e-5:
-                            v["name"] = p["name"]
-                            v_matched = True
-                            break
-                    if not v_matched:
-                        v["name"] = "" 
-                        
-                available_letters = [chr(i) for i in range(ord('A'), ord('Z')+1) if chr(i) not in used_names and chr(i) != 'O']
+                # Hàm check xem 2 điểm trùng nhau không
+                def is_same_point(p1, p2):
+                    return abs(p1["x1"] - p2["x1"]) < 1e-5 and abs(p1["x2"] - p2["x2"]) < 1e-5
+                
+                # Loại bỏ O (Gốc tọa độ) nếu có
+                available_letters = [chr(i) for i in range(ord('A'), ord('Z')+1) if chr(i) != 'O']
                 avail_idx = 0
+                
                 for v in vertices:
-                    if v["name"] == "":
-                        if abs(v["x1"]) < 1e-5 and abs(v["x2"]) < 1e-5 and 'O' not in used_names:
-                            v["name"] = 'O'
-                            used_names.add('O')
-                        else:
-                            if avail_idx < len(available_letters):
-                                v["name"] = available_letters[avail_idx]
-                                avail_idx += 1
-                            else:
-                                v["name"] = "V"
+                    # Gốc tọa độ
+                    if abs(v["x1"]) < 1e-5 and abs(v["x2"]) < 1e-5:
+                        v["name"] = "O"
+                    else:
+                        v["name"] = available_letters[avail_idx]
+                        avail_idx = (avail_idx + 1) % len(available_letters)
+                
+                # Đồng bộ tên từ vertices sang simplex_path
+                for p in simplex_path:
+                    for v in vertices:
+                        if is_same_point(p, v):
+                            p["name"] = v["name"]
+                            break
+                    if not p["name"]:
+                        p["name"] = "?"
                 
                 result["graph_data"] = {
                     "vertices": vertices,
