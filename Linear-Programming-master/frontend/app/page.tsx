@@ -148,69 +148,6 @@ export default function Home() {
             )}
 
             {!loading && result && (
-              <>
-                {/* ── Method selector cards ── */}
-                <div className="card" style={{ padding: "16px 20px" }}>
-                  <p style={{
-                    fontSize: 11, fontWeight: 700, color: "var(--text-muted)",
-                    textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: 12,
-                  }}>
-                    🔄 Chọn phương pháp giải
-                  </p>
-                  <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 10 }}>
-                    {METHODS.map((m) => {
-                      const active = method === m.id;
-                      return (
-                        <button
-                          key={m.id}
-                          onClick={() => resolveWith(m.id)}
-                          style={{
-                            background: active
-                              ? `linear-gradient(135deg, ${m.color}22, ${m.color}11)`
-                              : "var(--surface2)",
-                            border: `1.5px solid ${active ? m.color : "var(--border)"}`,
-                            borderRadius: 12,
-                            padding: "12px 10px",
-                            cursor: "pointer",
-                            transition: "all 0.2s",
-                            textAlign: "left",
-                            display: "flex",
-                            flexDirection: "column",
-                            gap: 6,
-                          }}
-                          onMouseEnter={(e) => {
-                            if (!active) e.currentTarget.style.borderColor = m.color;
-                          }}
-                          onMouseLeave={(e) => {
-                            if (!active) e.currentTarget.style.borderColor = "var(--border)";
-                          }}
-                        >
-                          <div style={{
-                            color: active ? m.color : "var(--text-muted)",
-                            display: "flex", alignItems: "center", gap: 6,
-                          }}>
-                            <span style={{ fontSize: 13, fontWeight: 700, color: active ? m.color : "var(--text)" }}>
-                              {m.label}
-                            </span>
-                          </div>
-                          <span style={{ fontSize: 11, color: "var(--text-muted)", lineHeight: 1.4 }}>
-                            {m.sub}
-                          </span>
-                          {active && (
-                            <span style={{
-                              fontSize: 10, fontWeight: 700, color: m.color,
-                              background: `${m.color}22`, padding: "2px 8px",
-                              borderRadius: 99, alignSelf: "flex-start",
-                            }}>
-                              Đang dùng
-                            </span>
-                          )}
-                        </button>
-                      );
-                    })}
-                  </div>
-                </div>
-
                 <ResultPanel result={result} />
                 {nVars === 2 && result.status === "optimal" && (
                   <Chart2D result={result} />

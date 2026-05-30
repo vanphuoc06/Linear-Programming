@@ -1,43 +1,6 @@
 "use client";
 import { useState } from "react";
 import { Constraint, SolveResult } from "@/types";
-// ─── Example problems ────────────────────────────────────────────────────────
-const EXAMPLES = [
-  {
-    label: "Ví dụ 1 — Maximize 2 biến (có đồ thị)",
-    objective: "max" as const,
-    method: "standard" as const,
-    c: [3, 5],
-    constraints: [
-      { coeffs: [1, 0], type: "<=" as const, rhs: 4 },
-      { coeffs: [0, 2], type: "<=" as const, rhs: 12 },
-      { coeffs: [3, 2], type: "<=" as const, rhs: 18 },
-    ],
-  },
-  {
-    label: "Ví dụ 2 — Vô số nghiệm tối ưu",
-    objective: "max" as const,
-    method: "standard" as const,
-    c: [2, 4],
-    constraints: [
-      { coeffs: [1, 2], type: "<=" as const, rhs: 8 },
-      { coeffs: [1, 0], type: "<=" as const, rhs: 4 },
-      { coeffs: [0, 1], type: "<=" as const, rhs: 3 },
-    ],
-  },
-  {
-    label: "Ví dụ 3 — Two-Phase (có ràng buộc ≥ và =)",
-    objective: "min" as const,
-    method: "two-phase" as const,
-    c: [2, 3, 4],
-    constraints: [
-      { coeffs: [3, 1, 1], type: ">=" as const, rhs: 6 },
-      { coeffs: [1, 2, 1], type: ">=" as const, rhs: 8 },
-      { coeffs: [1, 1, 1], type: "=" as const, rhs: 5 },
-    ],
-  },
-];
-
 interface Props {
   onResult: (result: SolveResult, nVars: number, payload: object) => void;
   setLoading: (v: boolean) => void;
@@ -82,21 +45,6 @@ export default function InputForm({ onResult, setLoading, loading, method, setMe
       });
     });
   };
-
-  const loadExample = (ex: typeof EXAMPLES[0]) => {
-    const n = ex.c.length;
-    const m = ex.constraints.length;
-    setNVars(n);
-    setNCons(m);
-    setObjective(ex.objective);
-    setMethod(ex.method);
-    setC(ex.c);
-    setConstraints(ex.constraints.map((c) => ({ ...c, coeffs: [...c.coeffs] })));
-    setShowExamples(false);
-    setErrors([]);
-  };
-
-  // ── Validation ───────────────────────────────────────────────────────────
 
   const validate = (): boolean => {
     const errs: string[] = [];
@@ -174,34 +122,6 @@ export default function InputForm({ onResult, setLoading, loading, method, setMe
       {/* Title row */}
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
         <h2 style={{ fontSize: 18, fontWeight: 700 }}>📝 Nhập bài toán</h2>
-        {/* Load example dropdown */}
-        <div style={{ position: "relative" }}>
-          <button className="btn-secondary" onClick={() => setShowExamples(!showExamples)}
-            style={{ display: "flex", alignItems: "center", gap: 6 }}>
-            📖 Bài mẫu ▼
-          </button>
-          {showExamples && (
-            <div style={{
-              position: "absolute", right: 0, top: "110%", zIndex: 100,
-              background: "var(--surface2)", border: "1px solid var(--border)",
-              borderRadius: 10, overflow: "hidden", minWidth: 280,
-            }}>
-              {EXAMPLES.map((ex, i) => (
-                <button key={i} onClick={() => loadExample(ex)} style={{
-                  display: "block", width: "100%", textAlign: "left",
-                  padding: "10px 16px", background: "transparent",
-                  border: "none", color: "var(--text)", fontSize: 13,
-                  cursor: "pointer", borderBottom: "1px solid var(--border)",
-                  transition: "background 0.15s",
-                }}
-                  onMouseEnter={(e) => (e.currentTarget.style.background = "var(--surface)")}
-                  onMouseLeave={(e) => (e.currentTarget.style.background = "transparent")}>
-                  {ex.label}
-                </button>
-              ))}
-            </div>
-          )}
-        </div>
       </div>
 
       {/* Config row */}
