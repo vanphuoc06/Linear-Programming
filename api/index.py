@@ -240,17 +240,7 @@ def get_standard_form(req: SolveRequest):
     return solver.get_standard_form()
 
 
-# ─── Vercel Serverless Handler ─────────────────────────────────────────────────
-# Mangum wrap FastAPI thành ASGI handler mà Vercel Python runtime hiểu được.
-# Khi chạy local bằng uvicorn thì biến `handler` không được dùng tới.
-try:
-    from mangum import Mangum
-    handler = Mangum(app, lifespan="off")
-except ImportError:
-    # Nếu mangum chưa được cài (môi trường dev local), bỏ qua
-    handler = None
-
 if __name__ == "__main__":
     import uvicorn
     # Chạy local server trên cổng 8000
-    uvicorn.run("main:app", host="0.0.0.0", port=8000, reload=True)
+    uvicorn.run("index:app", host="0.0.0.0", port=8000, reload=True)
