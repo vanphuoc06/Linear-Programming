@@ -88,7 +88,7 @@ export default function Home() {
             background: "linear-gradient(135deg, var(--accent), var(--accent2))",
             display: "flex", alignItems: "center", justifyContent: "center",
           }}>
-            <Calculator size={22} color="white" />
+            <span style={{ fontSize: 22 }}>🧮</span>
           </div>
           <div>
             <h1 className="gradient-text" style={{ fontSize: 20, fontWeight: 700, lineHeight: 1.2 }}>
