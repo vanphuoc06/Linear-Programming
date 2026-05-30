@@ -1,8 +1,6 @@
 "use client";
 import { useState } from "react";
 import { Constraint, SolveResult } from "@/types";
-import { Plus, Trash2, Play, BookOpen, ChevronDown } from "lucide-react";
-
 // ─── Example problems ────────────────────────────────────────────────────────
 const EXAMPLES = [
   {
@@ -176,7 +174,7 @@ export default function InputForm({ onResult, setLoading, loading, method, setMe
         <div style={{ position: "relative" }}>
           <button className="btn-secondary" onClick={() => setShowExamples(!showExamples)}
             style={{ display: "flex", alignItems: "center", gap: 6 }}>
-            <BookOpen size={14} /> Bài mẫu <ChevronDown size={14} />
+            📖 Bài mẫu ▼
           </button>
           {showExamples && (
             <div style={{
@@ -338,9 +336,8 @@ export default function InputForm({ onResult, setLoading, loading, method, setMe
 
       {/* Solve button */}
       <button className="btn-primary" onClick={handleSolve} disabled={loading}
-        style={{ width: "100%", justifyContent: "center", padding: "14px" }}>
-        <Play size={18} />
-        {loading ? "Đang tính toán..." : "Giải bài toán"}
+        style={{ width: "100%", justifyContent: "center", padding: "14px", fontSize: 16 }}>
+        {loading ? "Đang tính toán..." : "▶ Giải bài toán"}
       </button>
     </div>
   );

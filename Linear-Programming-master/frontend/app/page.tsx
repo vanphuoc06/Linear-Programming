@@ -5,28 +5,24 @@ import ResultPanel from "@/components/ResultPanel";
 import TableauSteps from "@/components/TableauSteps";
 import Chart2D from "@/components/Chart2D";
 import { SolveResult } from "@/types";
-import { Calculator, Zap, Shield, Layers } from "lucide-react";
 
 const METHODS = [
   {
     id: "standard" as const,
     label: "Đơn hình",
     sub: "Standard Simplex",
-    icon: <Zap size={20} />,
     color: "#6366f1",
   },
   {
     id: "bland" as const,
     label: "Đơn hình Bland",
     sub: "Bland's Rule",
-    icon: <Shield size={20} />,
     color: "#10b981",
   },
   {
     id: "two-phase" as const,
     label: "Đơn hình 2 pha",
     sub: "Two-Phase",
-    icon: <Layers size={20} />,
     color: "#f59e0b",
   },
 ];
@@ -50,11 +46,16 @@ export default function Home() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(body),
       });
-      if (!res.ok) {
-        const err = await res.json();
-        throw new Error(err.detail || "Lỗi server.");
+      
+      const text = await res.text();
+      if (text.startsWith("<!DOCTYPE") || text.startsWith("<html")) {
+        throw new Error("Không thể kết nối đến Backend (API Server). Lỗi hệ thống trả về trang HTML.");
       }
-      const data: SolveResult = await res.json();
+      
+      const data: SolveResult = JSON.parse(text);
+      if (!res.ok) {
+        throw new Error((data as any).detail || "Lỗi server.");
+      }
       const p = lastPayload as any;
       data.c = p.c;
       data.constraints = p.constraints;
@@ -188,7 +189,6 @@ export default function Home() {
                             color: active ? m.color : "var(--text-muted)",
                             display: "flex", alignItems: "center", gap: 6,
                           }}>
-                            {m.icon}
                             <span style={{ fontSize: 13, fontWeight: 700, color: active ? m.color : "var(--text)" }}>
                               {m.label}
                             </span>
@@ -228,7 +228,7 @@ export default function Home() {
                 border: "2px dashed var(--border)",
                 background: "transparent",
               }}>
-                <Calculator size={48} color="var(--border)" />
+                <span style={{ fontSize: 48 }}>📊</span>
                 <p style={{ color: "var(--text-muted)", fontSize: 14 }}>
                   Nhập bài toán và nhấn <strong style={{ color: "var(--text)" }}>Giải</strong> để xem kết quả
                 </p>

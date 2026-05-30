@@ -1,7 +1,6 @@
 "use client";
 import { useState } from "react";
 import { TableauStep } from "@/types";
-import { ChevronDown, ChevronRight } from "lucide-react";
 
 interface Props {
   steps: TableauStep[];
@@ -51,7 +50,7 @@ export default function TableauSteps({ steps, nVars }: Props) {
                 cursor: "pointer", color: "var(--text)", gap: 8,
               }}>
                 <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-                  {isOpen ? <ChevronDown size={16} /> : <ChevronRight size={16} />}
+                  <span style={{ fontSize: 16 }}>{isOpen ? "▼" : "▶"}</span>
                   <span style={{ fontWeight: 600, fontSize: 14 }}>
                     Bước {idx === 0 ? "0 (Bảng ban đầu)" : idx}
                     {step.point_str && <span style={{ color: "var(--accent)", marginLeft: 6 }}>— Tại {step.point_str}</span>}

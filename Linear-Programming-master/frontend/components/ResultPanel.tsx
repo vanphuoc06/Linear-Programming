@@ -1,42 +1,35 @@
 "use client";
 import { SolveResult } from "@/types";
-import { AlertTriangle, CheckCircle, Infinity, XCircle, Layers, RefreshCw } from "lucide-react";
 
 interface Props { result: SolveResult }
 
 const STATUS_CONFIG = {
   optimal: {
-    icon: <CheckCircle size={18} />,
     label: "Nghiệm tối ưu duy nhất",
     badgeClass: "badge-optimal",
     emoji: "✅",
   },
   multiple: {
-    icon: <Layers size={18} />,
     label: "Vô số nghiệm tối ưu",
     badgeClass: "badge-multiple",
     emoji: "🔵",
   },
   infeasible: {
-    icon: <XCircle size={18} />,
     label: "Vô nghiệm (Infeasible)",
     badgeClass: "badge-infeasible",
     emoji: "❌",
   },
   unbounded: {
-    icon: <Infinity size={18} />,
     label: "Không giới hạn (Unbounded)",
     badgeClass: "badge-unbounded",
     emoji: "♾️",
   },
   cycling: {
-    icon: <RefreshCw size={18} />,
     label: "Phát hiện lặp vòng (Cycling)",
     badgeClass: "badge-cycling",
     emoji: "🔴",
   },
   method_error: {
-    icon: <AlertTriangle size={18} />,
     label: "Lỗi phương pháp",
     badgeClass: "badge-method_error",
     emoji: "⚠️",
@@ -65,8 +58,7 @@ export default function ResultPanel({ result }: Props) {
       {/* Status badge */}
       <div style={{ display: "flex", alignItems: "flex-start", gap: 12 }}>
         <span className={`badge ${cfg.badgeClass}`} style={{ fontSize: 14 }}>
-          {cfg.icon}
-          {cfg.label}
+          {cfg.emoji} {cfg.label}
         </span>
       </div>
 
@@ -84,7 +76,7 @@ export default function ResultPanel({ result }: Props) {
       }}>
         {isCycling && (
           <div style={{ marginBottom: 8, fontWeight: 700, color: "#f87171", display: "flex", alignItems: "center", gap: 6 }}>
-            <RefreshCw size={16} /> CẢNH BÁO: Bài toán bị lặp vòng vô hạn!
+            🔴 CẢNH BÁO: Bài toán bị lặp vòng vô hạn!
           </div>
         )}
         {result.message}
