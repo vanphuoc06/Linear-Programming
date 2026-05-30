@@ -224,15 +224,16 @@ class SimplexSolver:
         cons = self.constraints
         m = len(cons)
 
-        # Kiểm tra ràng buộc >= hoặc = (không hỗ trợ cho Standard/Bland)
+        # Kiểm tra ràng buộc >= hoặc = → tự động chuyển sang Two-Phase (giống QHTT)
         for con in cons:
             if con["type"] in (">=", "="):
-                self.status = "method_error"
-                return self._result(
-                    "Bài toán chứa ràng buộc ≥ hoặc =. "
-                    "Phương pháp Đơn hình gốc/Bland yêu cầu tất cả ở dạng ≤. "
-                    "Vui lòng chọn Đơn hình 2 Pha."
-                )
+                self.steps.append({
+                    "note": (
+                        "⚠️ Bài toán chứa ràng buộc ≥ hoặc =. "
+                        "Tự động chuyển sang Đơn hình 2 Pha (giống QHTT)."
+                    )
+                })
+                return self._two_phase()
 
         # Xây TV xuất phát:
         # Biến: x_1..x_n (cột 0..n-1), w_1..w_m (cột n..n+m-1), RHS
@@ -248,11 +249,14 @@ class SimplexSolver:
             a = [_frac(x) for x in con["coeffs"]]
             b = _frac(con["rhs"])
             if b < Fraction(0):
-                self.status = "method_error"
-                return self._result(
-                    f"Ràng buộc {i+1} có vế phải âm (b = {_fmt(b)}). "
-                    "Đơn hình gốc yêu cầu b_i ≥ 0. Dùng Đơn hình 2 Pha."
-                )
+                # b_i < 0 → tự động chuyển sang Two-Phase (giống QHTT gui_server.py dòng 456-459)
+                self.steps.append({
+                    "note": (
+                        f"⚠️ Ràng buộc {i+1} có vế phải âm (b = {_fmt(b)}). "
+                        "Tự động chuyển sang Đơn hình 2 Pha."
+                    )
+                })
+                return self._two_phase()
             row = a + [Fraction(0)] * n_slack + [b]
             row[n + i] = Fraction(1)   # biến bù w_{i+1}
             tableau.append(row)

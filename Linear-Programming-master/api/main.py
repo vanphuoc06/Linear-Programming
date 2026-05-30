@@ -80,28 +80,45 @@ def solve(req: SolveRequest):
                 detail=f"Loại ràng buộc '{con.type}' không hợp lệ.",
             )
 
-    # Standard / Bland chỉ hỗ trợ <= (không có biến nhân tạo)
-    if req.method in ("standard", "bland"):
-        for con in req.constraints:
-            if con.type in (">=", "="):
-                return {
-                    "status": "method_error",
-                    "message": (
-                        "Bài toán chứa ràng buộc ≥ hoặc =. Phương pháp Đơn hình cơ bản / Bland "
-                        "yêu cầu tất cả ràng buộc ở dạng ≤. "
-                        "Vui lòng chọn phương pháp Two-Phase để giải bài toán này."
-                    ),
-                    "optimal_value": None,
-                    "solution": {},
-                    "steps": [],
-                }
-
     constraints_dict = [
         {"coeffs": con.coeffs, "type": con.type, "rhs": con.rhs}
         for con in req.constraints
     ]
 
-    if req.method == "graphical":
+    # ── Tự động chọn phương pháp phù hợp (giống QHTT gui_server.py dòng 188-459) ──
+    effective_method = req.method
+    auto_note = None
+
+    if req.method != "graphical":
+        # Kiểm tra các điều kiện cần nâng cấp phương pháp
+        has_non_le   = any(c.type in (">=", "=") for c in req.constraints)
+        has_neg_rhs  = any(c.rhs < 0 for c in req.constraints if c.type == "<=")
+        has_zero_rhs = any(c.rhs == 0 for c in req.constraints)
+
+        if req.method in ("standard", "bland"):
+            if has_non_le:
+                # Bài toán có >= hoặc = → tự nâng cấp (giống QHTT: parse_problem chuyển >= thành <= và gui_server auto-upgrade)
+                effective_method = "two-phase"
+                auto_note = (
+                    "⚠️ Bài toán có ràng buộc ≥ hoặc =. "
+                    "Tự động chuyển sang Đơn hình 2 Pha."
+                )
+            elif has_neg_rhs:
+                # b_i < 0 cho ràng buộc <= → tự nâng cấp (giống QHTT dòng 456-459)
+                effective_method = "two-phase"
+                auto_note = (
+                    "⚠️ Bài toán có vế phải âm (b_i < 0). "
+                    "Tự động chuyển sang Đơn hình 2 Pha."
+                )
+            elif has_zero_rhs and req.method == "standard":
+                # b_i = 0 (suy biến) → tự dùng Bland (giống QHTT dòng 197-199)
+                effective_method = "bland"
+                auto_note = (
+                    "⚠️ Bài toán có vế phải bằng 0 (có thể suy biến). "
+                    "Tự động chuyển sang Quy tắc Bland để tránh xoay vòng."
+                )
+
+    if effective_method == "graphical":
         if n != 2:
             raise HTTPException(
                 status_code=400,
@@ -112,7 +129,7 @@ def solve(req: SolveRequest):
             constraints=constraints_dict,
             objective=req.objective,
             bounds=req.bounds,
-            method=req.method,
+            method=effective_method,
         )
     else:
         solver = SimplexSolver(
@@ -120,13 +137,39 @@ def solve(req: SolveRequest):
             constraints=constraints_dict,
             objective=req.objective,
             bounds=req.bounds,
-            method=req.method,
+            method=effective_method,
         )
 
     try:
         result = solver.solve()
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Lỗi khi giải: {str(e)}")
+
+    # Đính kèm ghi chú auto-upgrade vào thông báo
+    if auto_note:
+        result["message"] = auto_note + " | " + (result.get("message") or "")
+        result["auto_upgraded_method"] = effective_method
+
+    # ── Tự động retry bằng Bland khi Cycling (giống QHTT dòng 478-490) ──
+    if result.get("status") == "cycling" and effective_method in ("standard", "two-phase"):
+        try:
+            solver_bland = SimplexSolver(
+                c=req.c,
+                constraints=constraints_dict,
+                objective=req.objective,
+                bounds=req.bounds,
+                method="bland",
+            )
+            result_bland = solver_bland.solve()
+            if result_bland.get("status") != "cycling":
+                result = result_bland
+                result["message"] = (
+                    "[Tự động Bland — đã khắc phục xoay vòng] "
+                    + (result_bland.get("message") or "")
+                )
+                result["auto_upgraded_method"] = "bland"
+        except Exception:
+            pass  # Giữ kết quả cycling gốc nếu Bland cũng lỗi
 
     if n == 2 and req.method != "graphical":
         try:
