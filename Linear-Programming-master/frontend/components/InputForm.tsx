@@ -140,11 +140,15 @@ export default function InputForm({ onResult, setLoading, loading, method, setMe
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(body),
       });
-      if (!res.ok) {
-        const err = await res.json();
-        throw new Error(err.detail || "Lỗi server.");
+      const text = await res.text();
+      if (text.startsWith("<!DOCTYPE") || text.startsWith("<html")) {
+        throw new Error("Không thể kết nối đến Backend (API Server). Lỗi hệ thống trả về trang HTML.");
       }
-      const data: SolveResult = await res.json();
+      
+      const data = JSON.parse(text);
+      if (!res.ok) {
+        throw new Error(data.detail || "Lỗi server.");
+      }
       // Attach input data for chart
       data.c = c.map(Number);
       data.constraints = constraints.map((con) => ({
