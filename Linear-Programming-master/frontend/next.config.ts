@@ -8,11 +8,16 @@ const nextConfig = {
       return [
         {
           source: "/api/:path*",
-          destination: "http://localhost:8000/api/:path*",
+          destination: "http://localhost:8000/api/:path*", // Proxy to local FastAPI
         },
       ];
     }
-    return [];
+    return [
+      {
+        source: "/api/:path*",
+        destination: "/api/index", // Route to Vercel Python Serverless Function
+      },
+    ];
   },
 };
 
