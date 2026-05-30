@@ -1,0 +1,244 @@
+"use client";
+import { useState } from "react";
+import InputForm from "@/components/InputForm";
+import ResultPanel from "@/components/ResultPanel";
+import TableauSteps from "@/components/TableauSteps";
+import Chart2D from "@/components/Chart2D";
+import { SolveResult } from "@/types";
+import { Calculator, Zap, Shield, Layers } from "lucide-react";
+
+const METHODS = [
+  {
+    id: "standard" as const,
+    label: "Đơn hình",
+    sub: "Standard Simplex",
+    icon: <Zap size={20} />,
+    color: "#6366f1",
+  },
+  {
+    id: "bland" as const,
+    label: "Đơn hình Bland",
+    sub: "Bland's Rule",
+    icon: <Shield size={20} />,
+    color: "#10b981",
+  },
+  {
+    id: "two-phase" as const,
+    label: "Đơn hình 2 pha",
+    sub: "Two-Phase",
+    icon: <Layers size={20} />,
+    color: "#f59e0b",
+  },
+];
+
+export default function Home() {
+  const [result, setResult] = useState<SolveResult | null>(null);
+  const [loading, setLoading] = useState(false);
+  const [nVars, setNVars] = useState(2);
+  const [method, setMethod] = useState<"standard" | "bland" | "two-phase">("standard");
+  // Keep a ref to the last solve payload so we can re-solve with a different method
+  const [lastPayload, setLastPayload] = useState<object | null>(null);
+
+  const resolveWith = async (newMethod: "standard" | "bland" | "two-phase") => {
+    if (!lastPayload) return;
+    setMethod(newMethod);
+    setLoading(true);
+    try {
+      const body = { ...(lastPayload as any), method: newMethod };
+      const res = await fetch("/api/solve", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(body),
+      });
+      if (!res.ok) {
+        const err = await res.json();
+        throw new Error(err.detail || "Lỗi server.");
+      }
+      const data: SolveResult = await res.json();
+      const p = lastPayload as any;
+      data.c = p.c;
+      data.constraints = p.constraints;
+      setResult(data);
+    } catch {
+      // silently ignore, InputForm already handles errors
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <div style={{ minHeight: "100vh", background: "var(--bg)" }}>
+      {/* Header */}
+      <header style={{
+        borderBottom: "1px solid var(--border)",
+        padding: "16px 32px",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "space-between",
+        backdropFilter: "blur(10px)",
+        position: "sticky",
+        top: 0,
+        zIndex: 50,
+        background: "rgba(10,15,30,0.85)",
+      }}>
+        <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
+          <div style={{
+            width: 40, height: 40, borderRadius: 10,
+            background: "linear-gradient(135deg, var(--accent), var(--accent2))",
+            display: "flex", alignItems: "center", justifyContent: "center",
+          }}>
+            <Calculator size={22} color="white" />
+          </div>
+          <div>
+            <h1 className="gradient-text" style={{ fontSize: 20, fontWeight: 700, lineHeight: 1.2 }}>
+              LP Solver
+            </h1>
+            <p style={{ fontSize: 12, color: "var(--text-muted)" }}>Quy Hoạch Tuyến Tính</p>
+          </div>
+        </div>
+        <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+          <span style={{
+            fontSize: 12, color: "var(--text-muted)", background: "var(--surface2)",
+            padding: "4px 14px", borderRadius: 20, border: "1px solid var(--border)",
+            lineHeight: 1.8,
+          }}>
+            Đơn hình • Bland • Two-Phase
+            <br />
+            <span style={{ opacity: 0.6 }}>Dev by Ngô Văn Phước</span>
+          </span>
+        </div>
+      </header>
+
+      {/* Main content */}
+      <main style={{ maxWidth: 1400, margin: "0 auto", padding: "32px 24px" }}>
+        {/* Hero */}
+        <div style={{ textAlign: "center", marginBottom: 40 }}>
+          <h2 style={{ fontSize: 36, fontWeight: 800, marginBottom: 8 }}>
+            Giải{" "}
+            <span className="gradient-text">Quy Hoạch Tuyến Tính</span>
+          </h2>
+          <p style={{ color: "var(--text-muted)", fontSize: 16, maxWidth: 600, margin: "0 auto" }}>
+            Công cụ tính toán quy hoạch tuyến tính một cách tự động
+          </p>
+        </div>
+
+        <div style={{ display: "grid", gridTemplateColumns: "minmax(0,1fr) minmax(0,1.2fr)", gap: 24 }}>
+          {/* Left: Input */}
+          <InputForm
+            onResult={(r, n, payload) => { setResult(r); setNVars(n); setLastPayload(payload); }}
+            setLoading={setLoading}
+            loading={loading}
+            method={method}
+            setMethod={setMethod}
+          />
+
+          {/* Right: Result */}
+          <div style={{ display: "flex", flexDirection: "column", gap: 24 }}>
+            {loading && (
+              <div className="card" style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 12, padding: 48 }}>
+                <div style={{
+                  width: 32, height: 32, borderRadius: "50%",
+                  border: "3px solid var(--border)",
+                  borderTopColor: "var(--accent)",
+                  animation: "spin 0.7s linear infinite",
+                }} />
+                <span style={{ color: "var(--text-muted)" }}>Đang tính toán...</span>
+              </div>
+            )}
+
+            {!loading && result && (
+              <>
+                {/* ── Method selector cards ── */}
+                <div className="card" style={{ padding: "16px 20px" }}>
+                  <p style={{
+                    fontSize: 11, fontWeight: 700, color: "var(--text-muted)",
+                    textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: 12,
+                  }}>
+                    🔄 Chọn phương pháp giải
+                  </p>
+                  <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 10 }}>
+                    {METHODS.map((m) => {
+                      const active = method === m.id;
+                      return (
+                        <button
+                          key={m.id}
+                          onClick={() => resolveWith(m.id)}
+                          style={{
+                            background: active
+                              ? `linear-gradient(135deg, ${m.color}22, ${m.color}11)`
+                              : "var(--surface2)",
+                            border: `1.5px solid ${active ? m.color : "var(--border)"}`,
+                            borderRadius: 12,
+                            padding: "12px 10px",
+                            cursor: "pointer",
+                            transition: "all 0.2s",
+                            textAlign: "left",
+                            display: "flex",
+                            flexDirection: "column",
+                            gap: 6,
+                          }}
+                          onMouseEnter={(e) => {
+                            if (!active) e.currentTarget.style.borderColor = m.color;
+                          }}
+                          onMouseLeave={(e) => {
+                            if (!active) e.currentTarget.style.borderColor = "var(--border)";
+                          }}
+                        >
+                          <div style={{
+                            color: active ? m.color : "var(--text-muted)",
+                            display: "flex", alignItems: "center", gap: 6,
+                          }}>
+                            {m.icon}
+                            <span style={{ fontSize: 13, fontWeight: 700, color: active ? m.color : "var(--text)" }}>
+                              {m.label}
+                            </span>
+                          </div>
+                          <span style={{ fontSize: 11, color: "var(--text-muted)", lineHeight: 1.4 }}>
+                            {m.sub}
+                          </span>
+                          {active && (
+                            <span style={{
+                              fontSize: 10, fontWeight: 700, color: m.color,
+                              background: `${m.color}22`, padding: "2px 8px",
+                              borderRadius: 99, alignSelf: "flex-start",
+                            }}>
+                              Đang dùng
+                            </span>
+                          )}
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+
+                <ResultPanel result={result} />
+                {nVars === 2 && result.status === "optimal" && (
+                  <Chart2D result={result} />
+                )}
+                {result.steps && result.steps.length > 0 && (
+                  <TableauSteps steps={result.steps} nVars={nVars} />
+                )}
+              </>
+            )}
+
+            {!loading && !result && (
+              <div className="card" style={{
+                display: "flex", flexDirection: "column", alignItems: "center",
+                justifyContent: "center", gap: 12, padding: 60,
+                border: "2px dashed var(--border)",
+                background: "transparent",
+              }}>
+                <Calculator size={48} color="var(--border)" />
+                <p style={{ color: "var(--text-muted)", fontSize: 14 }}>
+                  Nhập bài toán và nhấn <strong style={{ color: "var(--text)" }}>Giải</strong> để xem kết quả
+                </p>
+              </div>
+            )}
+          </div>
+        </div>
+      </main>
+
+      <style>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>
+    </div>
+  );
+}

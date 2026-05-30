@@ -1,0 +1,1068 @@
+
+--- PAGE 1 ---
+
+--- PAGE 2 ---
+THONG MIN MON HOC
+~
+thank@hcmus . edu . un
+no
+-
+Tai Lieu :
+~
++ Quy Hoach Tuyen Tink (6 chuongtail
+1 . Q . Khanh, T . H . Wrong
+Banem Diem :
+GK : 20 % 160' -90'
+- BT : 10 %
++ 12 at :/code
+: 10 %
+- Bonus :
+10 % (3lan)
+- KTDX : 10 %
+&
+CK: 60% (90'
+- 120')
+Nordung mon :
+Tann
+↓
+what
+tot
+BT This To -
+> Mohinh hoE Thuat Giai > Kra ket qua Traet qua cho bai tran this te
+~ -
+Lin
+⑤
+①
+#Dinhighia
+tranquyhoach tuyen tinh
+Chinear programming)
+:
+min/max
+= cT.
+i
+vecto bi
+-
+> vecto than co ham mee
+C11 + 22ky +... + Crkm
+
+--- PAGE 3 ---
+aa bi, 1 + aak2 +... +ancen by
+Rang bus Hang The/Bat Dang Thie
+I
+a[[bi ,iMc-dangmatran
+min/max ex
+(1)
+Ax[b
+Rang bus -
+Ac>, b
+Rang bus dai
+xj 30 , jEN1 &
+uj0, jeNa
+; tu do , je N,
+(N11 + (Na) + (Nz) = n
+D:
+max
+2u1 + 3x2
+-us -1)
+x=
+- xz + S1, 30
+6x1
+- x2
+- x, -1
+- x +
++ 13
+= 0
+x0 (
+=fa
+130
+un t do
+②Chuyen bai tran thist Con gian) QHTT Cm hink) :
+· Bien chinh (bai ton) (Dienkien)
+· Bien phu (tinh dua vao ban chinkl
+. Tham so
+· Ham muc tiei
+VDA Mot nha khoa hos nghienu ve tac
+, Hong
+a vitamin A va vitamin B a vo co thenguor , the to ma
+-
+~
+nguo 1 n gay co the tiep nhan khong qua 600 don vi vitamin A , khong qua 500on vi vitamin B . M
+~
+~
+&
+ngui mongay can ti 400 toi 1000 don vi vitamin A va vitamin B . Do suhoat dong ca 2 loai vitamin nay
+V
+nen mongay soten vi vitamin B khong it hon 1/2 so tor vi
+vitamin A nhung Khong tio nhieh hon 3 lan
+I
+~
+s vitamin A. Giacua 1 don vivitamin A la 9 ton vi tin te ca 1 Jon vi vitamin B la F,5 don vitin te. Ho can
+m
+V
+can chi itnhat bao nhie tien de dung c 2 loai vitamin tren
+↓
+2 : Mot cong ty can thue xeecho 140 nguoi va 9 tan hang. Noi thue xe co2 loaixe A v B . Trong toxe
+~
+A co 10 chic va xe B co S chic. Mot chie ye loai A de cho thue gia G trieu cong va load B I S trieu dong.
+V
+Biet rang xe loai A co the ch to da 20 nguoi va 0, 6 tan hang, xe loai B co the cho toa 10 nguoi va 0, 5
+↑
+~
+tan hang.Hoi cong ty can pha thre xe mi loai va chi phi dat ra nho nhat.
+↑
+Bailam
+-
+#1: Goi
+la so don vi vitamin A do voi co thenquoi (1, 8)
+(1)
+y la so don vi vitamin B do voi co thenquoi (y, 8)
+Theo bai tran , taco':
+
+--- PAGE 4 ---
+1 ngay
+, co theX to co the tiep nhan de
+600 dri vitamin A va 500 tri Vitamin B = x 600 , y > 500 (2)
+j
+Mongay , ng do can in 400 + 1000
+vtmA & B = 400 Xic + y
+< 1000(b)
+VTMB
+ko iton 1/2an VMA yL
+I
+= x y < 3x(4)
+VM B. ko de nhiei hin 3 Lan VTMA= y < 3x
+Ham muc tieu : min z = 9x + 7 ,Sy (5)
+Tw (1) , (2) , (3)
+, (4) va (5) , ta co:
+minz = 9x + F, by
+x608
+I
+y 500
+200(x+ y < 1000
+1
+x4
+y
+, 0
+#
+2 : Goikal s xeloai A , i y, 0 (1)
+V
+la so xe loai B
+j
+Xe A co 10 chien = A < 10(2)
+Xe B c 9 Chie Ex9
+(3)
+Xe A che toa 20 ngroi, xe Bcho to da 10nquoi
+. Long ty can this xe de cho 140 nguoi, suy nat
+20xa + 10x 148E)24a + xB- 14(4)
+Xe A cho fora 0,6 tan hang , xe B cho fora 0 ,5 tan hang
+. Congty can thue xe techog tan hang , say rai
+8.GxA + 0,Sk 9( 6xa + 5x290(5)
+Ham muc tien : minz = GKA + 5x (trieuTong) (6)
+r
+Ti (1) , (2) , (3), (4) , (3), (6) , suy na :
+minz = Gka + Sub
+xa3
+kn
+I
+24a + (214
+Gla + Sky[90
+10
+x9
+#
+↳. Phan loai bai tran QHTT :
+min
+= x
+* Dang chinh tas : &
+Ax = b
+x), 8
+
+--- PAGE 5 ---
+-Dangint
+~
+Chrye QHTT tong quat:
+Chuan
+↳chinh ta
+⑪
+QHTT tong quat -
+> chuan tas
+min
++ -
+>
+OK Fine
+max
+cTx -
+>
+- min-cix
+abi
+-
+>
+- a - bi
+abi
+-
+> OK Fine
+&abi-
+i
+a[x
+= bi - I
+a
+&
+ac-sibi ,) SiON
+Six O
+x;, 0 -
+> OK Fine
+yj =
+-xj
+20 -
+>
+Y; 70
+; tu do -
+> x
+= xj
+- uj(x) 30 , x; 7, 8)
+#
+QHTT Tong Qu't- > Chinh Tas
+min
+<T
+-
+>
+OK fine
+max cTx
+-
+>
+- min-cin
+abi
+-
+>
+ax- Si
+- bi
+Si30
+abi -
+Jax
++ si
+= bi
+Si
+a[x
+= bi
+-
+>
+OK fine
+.
+N: 0.
+-cas bai tran sau ve mo hink QHT : 1 .1/38 + 1 .4/39 ,
+1 . 5 , 1 .6/10
++ 1 .8/41
+Chuyen-
+&
+②Chuyen cas bai tran QHTT tong quat ve dang chuan va chinh tac : 1 . 10/41 + 1 . 12 % 1 .13/42
+↳
+①1 .19/41/lam cho vui, ko sira trong gir BTL .
+#
+. Phan loai tin hieu
+not in. * =( ..., x*) (ban g
+v
+· nghi
+&
+a). Day nhatnghiem :
+-
+v -
+> Giatri tor vin:
+z* ((#)
+
+--- PAGE 6 ---
+Bai tran VNo
+-
+>
+min = giatri tor in
+z *
+= + e
+b) Vinghiem: I
+max = gi tri torin
+z*
+= -e
+~
+bai tran co VSNo vaconola :....
+ca so bien te do
+Kinghiem: giatri to ww I duy nhtt
+Bai toan ko gib not
+↳
+·.Bitrn
+khng gio ni:) min ent kobichen.
+min gri*
+(
+max = gtriz* + 0
+&. Gii bai tran QHTT 2 bien bangpphinhho :
+maX
+3x1 + 2ky(z)
+-k2
+&
+x+ 2x[6(1)
+①
+-
+(4)
+-x + x = = 1(2)
+S
+x170(3)
+↓
+4278
+(4)etm
+z = 6
+=> Vy : no tor ina ( , (*) (k)
+= (0, 6) v gia trilaz
+*
+= 18
+v
+Each
+2 : pp trist ham muc tieu
+=
+cm (3, 2) =
+3x+ 24
+= 6
+Chon (0 ,01 dexet :
+y
+3.0 + 2.0 = 0
+=> No for in la doan BC va gia tri to in la 18
+.
+
+--- PAGE 7 ---
+-x +( 1(1)
+(B) & a
+↑*
+Bai toan ko gii noi va co gri to vin l :
+Z * = + e
+V
+Bai toan co duy nhat no = 10,0), gir l O
+/
+8
+. Phuong phap don hink gii bai tran QHTT : (bO
+Cotiem bien)
+Bai ton QHTT , dang chuan : (
+min six
+min 2) + (2(2+... + Cnkn
+(2) -
+> (P)
+Ax[b
+(x + Q12k2 +... t Ginkn =
+be
+I
+&I
+:
+aznknE by
+x07=
+ap21 + 9222 +... +
+And + Azaz+... Annkn [bn
+x 1
+.. -, kn30
+&
+1 : Xay dung ti rung xut phat
+2 = C31+ Gaby +... + Cndn
+-
+> bin ko c s
+(G>O]
+bin
+&
+WL = b1-nk1
+- &,(2 ...-Inkn
+Cho bin no co s = O = doc giatri bien co so
+↳s
+Was ba--Azka
+-
+...
+- Dankn
+:
+Wn = bn-And-Anzk2
+-
+...
+- Ann an
+Bue
+2 : Thuchien chon bin vo/ra :
+~
+honbien vo co s : chon bin /kocoso) co he so G am nhat (x;) (cotung voi sei)
+~
+
+--- PAGE 8 ---
+↳
+hambienna
+Chilunycot
+. Tren cot , chily =dong ma he so truss do am (0) (i)
+↑
+Tinh: min(i) ng dongibinai
+xaytvungTrungi
+a
+#G : G>0 -
+> dung
+=> Tu ving In nhat l+ vington doc nghiemvagitri to in ca (4). tralaino va
+S
+gia tri toiina (1)
+W
+D:
+max 30 + 2x2-min-3x! - 2u,
+x+2x6
+(4) = (P)
+-x1 +(1
+(p): (viet(ai)
+&
+x130
+& 1
+20
+↓
+* (0,1)
+z
+=
+- 3x1
+- 2x,
+=
+16
+I
+&
+-w = 6
+- x1
+- 2x
+& (0,07
+w = 1 + x
+- x
+(wIwz0)
+z
+=
+- 18 + 4x2 + 3w1
+x1 =
+6
+- 242
+- wa
+wa = F
+- 3x2
+- NI
+Turing to n :
+~
+&
+(Inghiem
+V
+Cho= 0
+, W = 0 El GTTU
+:z1
+(1) nghiem
+↑⑭
+not UN
+Tirungtonin -
+> Gro
+(81
+-
+>Sno
+(e)
+GTTU
+GTTU
+b)
+i tran lo gio no : 7 tu ving : co bin vo,nhung ko co bien na
+
+--- PAGE 9 ---
+-
+Batoan vo sons : S GC Lingto in) : G = O
+VD :
+maxx + 2x
+140
+I
+-x1
++ 42 - 1
+↓·
+20
+z =x
+- 2x2
+w = 1 + x1
+- x
+↓
+z =
+- 2
+-3x+ 2WI
+= 1
+x = 1 + 2
+- W1
+Bai tran coVSNo
+max x + 2k2
+-min-121-24,
+x + 2x26
+-x+x1
+viet lai
+>20
+I (, 0
+I #
+/so
+I
+=
+(1) : noy=I
+OSWF
+GTTU l 6
+.
+(Roc TH UNo (I'l : chow1 = 0 va wabin tu do
+, Wa, O
+=> I
+-↳
+=
+
+--- PAGE 10 ---
+#K bin :
+-20
+I 1) 0
+Chin nhin vic
+I
+=> O =F
+GTTL :
+- 6
+.
+z =
+- 6 + w1
+12= 4.
+=
+WiVTshnhngbabin.
+b) . Dungppon hinh de gii.
+). Minh hoa cas bl lap's caub len hinktrong cau a
+. (mo ta su di chuyen qua cas bloc lap
+p
+ca ppon hink).
+1.10(a)/47 , 1 .18(a)/44 , 1 . 20 (fully) /43.
+# . Dangbang wa phong phap don hink :
+↓
+max
+3x1
++ 24,
+xi + 2x26
+-
+&
+(P) :
+- x1 + 22k1
+12 = 1
+&
+-
+-
+x0
+- 18
++ 422 + 31
+1.
+-
+x W
+x= = 6
+- 242
+- WI
+- min-3x1-2x,
+wa = F
+- 3x2
+- WI
+(1) :
+-x + 11
+x0
+&
+x + 2x6#
+x2 8
+1
+2
+03117
+
+--- PAGE 11 ---
+*
+. Gia baitoan QHTT trong truing hop 7 bi = 0 :
+Phuong phap Xay Bland :
+-
+Chon binvo : trong so cas bin lo cost co he sam (G<0)
+L
+~
+Chon bien co s nhnhat (1,2 , k , W We
+Chon bin ra : y nhion hinh tinh
+D:
+↓
+-21x
+,
+- 24Wc
+- 2241 + 93x
+# =
+- 2xy + 9w+ 4x1
+- 8x2
+X x45
+0.Su-wa- 0, Su, + 1 ,5
+= 0
+W, =
+1
+- 21
+Y = 1
+↓
+z
+=- xz
++ 20wz + 27x + 44x4
+#x3
+- 2wy + 3x2
+- 244
+W1 =
+2x
++ w2 + 4x2
+- 8x4
+->
+wz = 1 - kz + 2wa
+- 3xz
+- 24
+=
+-
+1 + 18w2 + 30x + 42x + w
+x1 1
+- W3
+xz
+= 1 + 2x2
+- 3x + 244
+- ws
+1 = 2 + 5wz
+- 2xz
+- 4x4
+- 23
+IP') no:Cho Wa = Pics = 0 ; + = 0, wa = 0,_ = 1, k = 1, Was 2
+GTTW :
+z =
+- 1
+(4) no: x_ = 1 , x = 0 , xz = 1 , x4 = 0
+GTMU : z**
+- 1
+⑪al .xb1
+10
+,1)
+-
+> phong phaponhink (v)
+a.E
+a - b = (1
+- 3+ian
+-bal40 )
+3038
+a
+= (a+ 9))0
+-
+>Phuong phap Bland (v)
+F bi = 0
+-
+> phuong phap Bland
+Don hinh
+/163 : gbangphngphBland
+2).
+3 . 1/85 (gufe)
+3).
+33/85 (a)
+. Umi bai tran bixay vong new dungon hinh
+y 3.4/86 (Dung Bland giail
+b) . Gii lai bai toan bang Bland.
+
+--- PAGE 12 ---
+4).
+3 . 6/86 + 3 .9/87
+5)
+3 . 14/89(a,f, h) Dung don hink
++ Bland degiai
+&imibatran
+QHTT trong Ibi O :
+thuat tran 2 phal
+(1) ->;())
+dang chuan f
+min
+&
+Ax<b
+(7b: >0)
+x7, 8
+Pha 1 :
+#Xay ding bai toan botri
+mino
+I
+aTx-so-be
+aix-1b2
+(4)
+:
+anx-bm
+(C, 0 ; <30
+2). Laptiving xuat phat (2)
+-
+>
+a
+= wz = ba
+- aix
++ x
+:
+#m = bm-anx + x
+3). Bien vo :
+Bien ra : Wi kng voi bi am nhat E xoay > th ving mos
+Living chap nhan de bi < 0 or bi =0
+4) . Dung xoay ton hinh or xay bland :
+4. 1 .
+3-angbus
+catrivingto in (8) (RBL)
+r
+chuyen sang pha 2 .
+4 .2.
+ang tap chaphand
+ha
+2 :
+
+--- PAGE 13 ---
+1) . Lapt vung chap nhan de za (1 ti (4) va (4)
+hammuctieu
+rang bude
+↳de lap toT v RBy (Khi cho =0)
+2). Xoay don hink -
+> KQ
+#D:
+min+ 25
+-( + x[
+- 2(1)
+(1)
+- (1
+- 2xX
+- 1(2)
+I
+( - 2(3)
+x 30(4)
+x, 0 (5)
+x
+->·
+#
+(C)oa
+=> [GTTU AB
+hal:
+↑
+Xay dung bai toan bottro
+min
+xp
+-x1 + (2
+- xo & 2
+(6): 1
+- 2k2
+- 1.2
+- 4
+I 21
+-
+- 12
+11kzik@
+Lap ti ving xuat phat :
+
+--- PAGE 14 ---
++-
+- wa =
+- 4 + ( + 2x+ 20
+wj =
+2
+- xz + 3
+&
+- wi
+= 2
+- 3x + Wa
+wj
+= G
+- x
+- 3x2 + Wa
+↓-
+= (o =
+- x1 + 21 + W
+Imbal
+> = 4-
+w = + 51 -1 +
+Pha 2: Cho =0 (RB2)
+Ta co : TV cndeca(4)
+-
+=
+-1+
+W =
++1
+NVTI
+
+--- PAGE 15 ---
+Chowc= 0 . GTTU : z =
+(2= + W
+(p
+= =-
+A(8,
+E [0, 2]#
+yding bai toan Jingug(D)
+cho bai toang
+dual problem
+primal
+MT :mincie
+M
+max yTb
+RB B
+↑
+po , ion
+RB :
+at bi , it Ma
+y: 0 , iCM2
+,
+bi , iE Mc
+Yi, O , it My
+-
+x, 7, 0
+,
+JEN1
+y
+T A+ Xy , JEN
+- cut thi J
+(,O ,
+JENa
+y
++ Aj), (g , TENr
+RB
+x +udo, JENs
+y Aj
+= (j , JEN
+#D:
+(P)
+-
+>
+(D)
+~
+min( + 2x-3
+max Sy, + Gyz- 2yz + 6y4
+-
+x1 + x2
+ye tu do
+(2
+- xz + 2xz = 6
+ya to do
+RBD
+x + (
+- xyx
+- 2
+y 0
+1
+y48
+5
+#
++ ya
++ yz - 1
+x20
+y1
+- yz
++ yz
+-3y42
+RB
+, to do
+2yc
+- y ,
++ Syy =
+- 3
+-
+> (DD) = (P) ???
+Each
+1 : (tric tiep) - (D)
+-
+> (DD) = (P)
+(P)
+minxe + 2x
+- 31
+- min-Sy , -Gyz
++ 2y,- Gyp
+- maxx , + 2xa
+- 36
+-
+-
+-
+x1 + x2
+=
+5
+140
+(
+- x + 24
+= 6
+(20
+x1 + x
+- xz4
+- 2=li I
+-
+x1
+- x2 + 2x =
+- 6
+x20
+Ya ta
+x1 + x2
+- 4y3, 2
+x, tu do
+y40
+- 3x + 5x37
+- 6
+
+--- PAGE 16 ---
+min-1122 + 3ky
+- x1
+- x2= 5
+- (1 + (
+- 2xz = 6
+-x 1
+- 7 + 15
+- 2
+-i
+I
+30
+3 =
+- x2
+< tudo
+( = -3
+#
+inhngl
+11) min -
+> (D) max
+#i si: 1 diem unda (4)
+la 1 diem end cua (D)
+Y
+Khido, yTb [cTx
+↳
+v
+#quangminy OD
+-
+v
+* Neu* langhiem cua (P) thi
+y
+* langhiem ca (D)I ↳
+S = 0
+(c+x* = y
++b)
+cTx
+= yTb
+↑
+*NumcaP
+thi+
+(an. ca(P)
+y (an.ma (D)
+: 1Gar
+x + 2x + 2x + 14 = 1
+x + x + 5x + 2x4 = 1
+(P)
+30
+&
+24, 0
+(3), 0
+x47, 0
+
+--- PAGE 17 ---
+in
++
+5
++2 -
+=>
+m
+24, 0
+(2y1
++ yz=1(2)
+(3), 0
+CySy
+x47, 0·
+G
+max y= +Y
+To
+(2) va (3) = A(gi) trithammustien : y,
++ ya
+= 1
+Vay
+: 1 diem toina (D) v GTTU : z*=5
+=> Theo dinklij do lech but ta can timeva (chox = 0ixy = 0)
+(D) :
+min s , + Ziz
+42 = 70
+2x2 + 2451
+I ( + 54) = 1
+E) I4=
+0
+<i4338
+=> No (P) :
+u. = 0
+I
+42=
+u=
+24 = 0
+=> zip) = 5
+
+--- PAGE 18 ---
+#.
+thuat tran don hink dongau
+: (7b< @)
+↑
+min x
+(b) -(4)(Ax
+b-
+x70
+1
+: Xaydingtuvingxutph
+= C + C +... t kn
+Wi = by + am) + Ge2)2+... + Ginn
+W2 = bz + 92)+ a(k2+... t a2n))n
+:
+#n = bn+ And t Anz + ... Ann In
+12: Chon bien vo/ra:
+a). Chon bien ra : bisam what (dong jl
+b). Chin bin vo : Xettijl mini s
+, ad
+-
+> cot (Jo
+b17. 7 Jo xayb inhthing = tu rung (b:0) => Don hink (godl
+↳2. Jo => phakoapdung quamu
+↳
+httnnphag
+Pha 1 : tap bai tran botro
+-
+min 12/ + 11+... +n)n
+As< b
+S x, 0
+Dung thuat toanonhink dongu (Muc 12)
+V
+ti ving to vina (1)
+v
+: Dunghammutintvungwphnvingchpnhan cabate
+Dungon hink go no
+bai tran gos
+gi tri to nu
+#in4
+It
+- 2x,
+- 4x4
+- 8(2)
+- x ,
++ 3xx
+- 7(3)
+x30(4)
+(2015)
+
+--- PAGE 19 ---
+that
+wa = 8 + 2x1
+- 422
+↳Nz
+=
+- 7 + x
+- 3)
+=
+wi
+= 18 + Fx + 7w
+wa = G
++ 2x2 + 2Ws
+&ha 2:
+-
+>72
+wi
+= 18 + Fx + 7w
+wa = G
++ 2x2 + 2Ws
+①X
+↑I·
+①
+Vay bai ton ko gioi noi
+, GTM l : z = -e
+↓
+=>
+72
+wi
+= 18 + Fx + 7w
+wa = G
++ 2x2 + 2Ws
+Bai tran co bien vaonhungkhong
+co bienna = Bai toan ko giorno f GTTP. Z*I
+
+--- PAGE 20 ---
+BNN :
+6.↳+ 6 . 5 + 6 .6/147
+6
+. 8
++ 6 .9/147
++4 : 28/5
+· Baitp
+T4 : 416 : Nopcode
+Thi :
+ND : on he't
+De : Gong
+T1g
+: 90 -> 120'
