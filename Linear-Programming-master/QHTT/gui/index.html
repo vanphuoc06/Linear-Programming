@@ -1,0 +1,675 @@
+<!DOCTYPE html>
+<html lang="vi" data-theme="light">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/svg+xml"
+    href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%230ea5e9' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3 3v18h18'/%3E%3Cpath d='m19 9-5 5-4-4-3 3'/%3E%3C/svg%3E" />
+  <title>QHTT_KM197</title>
+
+  <!-- Google Fonts: Inter & Fira Code -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Inter:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet">
+
+  <!-- BEGIN: Welcome Screen Custom Assets -->
+  <link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;600;700&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <script>
+    tailwind.config = {
+      corePlugins: {
+        preflight: false, /* Disable preflight to avoid breaking original CSS grids/scrollbars */
+      },
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              crimson: '#bd162c',
+              cream: '#fff8f7',
+              'cream-dim': '#e2d8d7',
+              'cream-bright': '#fff8f7',
+              'cream-low': '#fcf1f0',
+            }
+          },
+          fontFamily: {
+            sans: ['Hanken Grotesk', 'sans-serif'],
+          },
+          borderRadius: {
+            'custom': '8px',
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    /* Selective styles for welcome buttons hover */
+    .btn-selection {
+      transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.2s ease;
+    }
+
+    .btn-selection:hover {
+      transform: translateY(-4px);
+    }
+
+    .btn-selection:active {
+      transform: translateY(0);
+    }
+
+    /* Soft grid pattern behind onboarding container */
+    .bg-pattern {
+      background-image: radial-gradient(#bd162c 0.5px, transparent 0.5px);
+      background-size: 24px 24px;
+      opacity: 0.03;
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      pointer-events: none;
+    }
+  </style>
+  <!-- END: Welcome Screen Custom Assets -->
+
+  <!-- Liên kết CSS giao diện cao cấp -->
+  <link rel="stylesheet" href="index.css">
+</head>
+
+<body>
+  <div class="bg-pattern"></div>
+
+  <div class="app-container">
+
+    <!-- 1. Màn hình chọn chế độ ban đầu (Onboarding Screen - Premium Crimson & Cream) -->
+    <div id="onboardingContainer" class="animate-fade-in"
+      style="display: flex; align-items: center; justify-content: center; min-height: calc(100vh - 3rem); padding: 2rem; width: 100%;">
+      <main class="w-full max-w-4xl px-6 py-12" data-purpose="main-content-container">
+
+        <!-- Branding/Header Section -->
+        <header class="mb-12 text-center" data-purpose="header">
+          <div class="inline-block p-3 bg-brand-crimson rounded-full mb-6">
+            <svg class="h-8 w-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg">
+              <path
+                d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"
+                stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+            </svg>
+          </div>
+          <h1 class="text-3xl font-bold text-gray-900 tracking-tight mb-3">Vui lòng chọn phương thức</h1>
+        </header>
+
+        <!-- Selection Buttons Section -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8" data-purpose="button-grid">
+
+          <!-- BEGIN: Manual Input Button (NHẬP THỦ CÔNG) -->
+          <button id="selectManualBtn"
+            class="btn-selection group relative flex flex-col items-center justify-center p-8 bg-white border-2 border-transparent rounded-custom shadow-lg hover:shadow-xl hover:border-brand-crimson/20 cursor-pointer text-center"
+            style="border-radius: 8px;" data-purpose="manual-input-action">
+            <div class="mb-6 p-5 bg-brand-cream rounded-full group-hover:bg-brand-crimson/5 transition-colors">
+              <svg class="h-10 w-10 text-brand-crimson" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg">
+                <path
+                  d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"
+                  stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+              </svg>
+            </div>
+            <span class="text-xl font-bold text-brand-crimson tracking-wider uppercase">NHẬP THỦ CÔNG</span>
+          </button>
+          <!-- END: Manual Input Button -->
+
+          <!-- BEGIN: Value Input Button (NHẬP GIÁ TRỊ) -->
+          <button id="selectStructuredBtn"
+            class="btn-selection group relative flex flex-col items-center justify-center p-8 bg-brand-crimson rounded-custom shadow-lg hover:shadow-2xl hover:bg-red-800 cursor-pointer text-center"
+            style="border-radius: 8px;" data-purpose="value-input-action">
+            <div class="mb-6 p-5 bg-white/10 rounded-full group-hover:bg-white/20 transition-colors">
+              <svg class="h-10 w-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg">
+                <path
+                  d="M7 7h.01M7 11h.01M7 15h.01M11 7h.01M11 11h.01M11 15h.01M15 7h.01M15 11h.01M15 15h.01M19 7h.01M19 11h.01M19 15h.01M7 19h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v12a2 2 0 002 2z"
+                  stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+              </svg>
+            </div>
+            <span class="text-xl font-bold text-white tracking-wider uppercase">NHẬP GIÁ TRỊ</span>
+          </button>
+          <!-- END: Value Input Button -->
+
+        </div>
+      </main>
+    </div>
+
+    <!-- 2. Header Area (Ban đầu ẩn, chỉ chứa nút đổi màu ở góc phải trên cùng) -->
+    <header id="appHeader" class="app-header" style="display: none;">
+      <div></div> <!-- Cột trái để trống, không cần logo và chữ giải bài toán tối ưu -->
+      <div class="header-actions">
+        <button id="themeToggleBtn" class="theme-toggle-btn" title="Chuyển đổi giao diện Sáng / Tối">
+          <!-- Moon Icon (Default Dark) -->
+          <svg id="themeIcon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z" />
+          </svg>
+        </button>
+      </div>
+    </header>
+
+    <!-- 3. Main Body Grid (Ban đầu ẩn, hiện sau khi chọn chế độ) -->
+    <main id="appBodyGrid" class="app-body-grid" style="display: none;">
+
+      <!-- Cột Trái: Bảng Điều Khiển Nhập Liệu & Điều Hướng Sticky -->
+      <div class="left-column-layout" style="display: flex; flex-direction: column; gap: 1rem; height: 100%;">
+
+        <section class="sidebar-control-panel glass-panel"
+          style="position: static; margin-bottom: 0; max-height: calc(100vh - 9rem); overflow-y: auto; padding: 1.15rem;">
+
+          <!-- Chế độ Nhập Tự Do (Manual Textarea) -->
+          <div id="manualInputSection" class="form-group animate-fade-in"
+            style="display: flex; flex-direction: column; gap: 0.85rem;">
+            <label class="form-label"
+              style="font-weight: 700; font-size: 0.9rem; color: hsl(var(--text-secondary)); margin-bottom: -0.25rem;">Nhập
+              đề bài ở đây...</label>
+            <textarea id="problemTextarea" class="textarea-field"
+              style="height: 180px; min-height: 170px; resize: vertical;"
+              placeholder="Nhập đề bài ở đây...... ví dụ:&#10;min -x1 + x2&#10;-x1 - 2x2 <= 6&#10;x1 - 2x2 <= 4&#10;-x1 + x2 <= 1&#10;x1 >= 0&#10;x2 >= 0"></textarea>
+          </div>
+
+          <!-- Chế độ Nhập Theo Form (Form Builder) -->
+          <div id="structuredInputSection" class="animate-fade-in"
+            style="display: none; flex-direction: column; gap: 0.85rem;">
+
+            <!-- Lựa chọn mục tiêu & Số biến & Số ràng buộc -->
+            <div style="display: grid; grid-template-columns: 1.2fr 1fr 1fr; gap: 0.5rem;">
+              <div class="form-group">
+                <label class="form-label">Hàm mục tiêu</label>
+                <select id="formObjective" class="select-field" style="padding: 0.42rem 0.5rem; font-size: 0.85rem;">
+                  <option value="min">min</option>
+                  <option value="max">max</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Số biến</label>
+                <input type="number" id="formVarsCount" min="1" max="500" class="select-field"
+                  style="padding: 0.42rem 0.5rem; font-size: 0.85rem; text-align: center;" value="2">
+              </div>
+              <div class="form-group">
+                <label class="form-label">Số ràng buộc</label>
+                <input type="number" id="formConsCount" min="0" max="500" class="select-field"
+                  style="padding: 0.42rem 0.5rem; font-size: 0.85rem; text-align: center;" value="3">
+              </div>
+            </div>
+
+            <!-- Hệ số hàm mục tiêu -->
+            <div class="form-group">
+              <label class="form-label">Hệ số Hàm mục tiêu (z)</label>
+              <div id="objCoeffsContainer" style="display: flex; flex-wrap: wrap; gap: 0.5rem; align-items: center;">
+                <!-- Javascript render động ở đây -->
+              </div>
+            </div>
+
+            <!-- Các ràng buộc -->
+            <div class="form-group">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2px;">
+                <label class="form-label">Các ràng buộc</label>
+                <button id="addConstraintRowBtn" class="builder-add-row-btn"
+                  style="padding: 0.2rem 0.45rem; font-size: 0.72rem; gap: 0.25rem; color: #bd162c;">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M5 12h14" />
+                    <path d="M12 5v14" />
+                  </svg>
+                  Thêm dòng
+                </button>
+              </div>
+              <div id="constraintsContainer" class="form-builder-container">
+                <!-- Javascript render động ở đây -->
+              </div>
+            </div>
+
+            <!-- Ràng buộc dấu -->
+            <div class="form-group">
+              <label class="form-label">Ràng buộc dấu</label>
+              <div id="boundsContainer" style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.5rem;">
+                <!-- Javascript render động ở đây -->
+              </div>
+            </div>
+
+            <!-- Bản dịch text tự động -->
+            <div class="form-group" style="opacity: 0.95;">
+              <label class="form-label">Bài toán ban đầu</label>
+              <pre id="compiledPreviewBox"
+                style="font-size: 0.9rem; font-family: 'Consolas', 'Fira Code', monospace; padding: 0.6rem 0.75rem; background: hsla(var(--bg-primary) / 0.6); border: 1px solid var(--glass-border); border-radius: 6px; white-space: pre-wrap; line-height: 1.45; min-height: 80px; max-height: 140px; overflow-y: auto; font-weight: 500; color: hsl(var(--text-primary));"></pre>
+            </div>
+
+          </div>
+
+          <!-- Nút giải bài toán -->
+          <button id="solveBtn" class="action-btn-gradient" style="margin-top: 0.5rem;">
+            <svg id="solveIconPlay" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"
+              fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polygon points="6 3 20 12 6 21 6 3" />
+            </svg>
+            <svg id="solveIconSpin" class="animate-spin" style="display: none;" xmlns="http://www.w3.org/2000/svg"
+              width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+              stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 12a9 9 0 1 1-6.219-8.56" />
+            </svg>
+            <span id="solveBtnText">Giải Bài Toán</span>
+          </button>
+
+        </section>
+
+        <!-- Khối Lịch sử làm bài cao cấp -->
+        <section class="sidebar-history-panel glass-panel">
+          <div
+            style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px dashed var(--glass-border); padding-bottom: 0.5rem; width: 100%;">
+            <div
+              style="display: flex; align-items: center; gap: 0.45rem; font-size: 0.85rem; font-weight: 700; color: #bd162c; font-family: 'Outfit', sans-serif; letter-spacing: 0.5px; text-transform: uppercase;">
+              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10" />
+                <polyline points="12 6 12 12 16 14" />
+              </svg>
+              Lịch sử giải bài
+            </div>
+            <button id="clearAllHistoryBtn"
+              style="background: transparent; border: none; color: hsl(var(--accent-rose)); font-size: 0.75rem; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 0.25rem; transition: opacity var(--transition-fast);"
+              title="Xóa toàn bộ lịch sử">
+              Xóa hết
+            </button>
+          </div>
+
+          <!-- Bộ lọc tìm kiếm lịch sử -->
+          <div style="position: relative; width: 100%; margin-top: 0.25rem;">
+            <input type="text" id="historySearchInput" placeholder="Tìm kiếm bài đã giải..."
+              style="width: 100%; padding: 0.42rem 0.6rem 0.42rem 1.75rem; font-size: 0.78rem; border-radius: var(--radius-sm); border: 1px solid var(--glass-border); background: hsla(var(--bg-primary) / 0.5); color: hsl(var(--text-primary)); outline: none; transition: border-color var(--transition-fast);">
+            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"
+              style="position: absolute; left: 0.55rem; top: 50%; transform: translateY(-50%); color: hsl(var(--text-muted)); pointer-events: none;">
+              <circle cx="11" cy="11" r="8" />
+              <path d="m21 21-4.3-4.3" />
+            </svg>
+          </div>
+
+          <!-- Danh sách bài làm -->
+          <div id="historyListContainer"
+            style="display: flex; flex-direction: column; gap: 0.5rem; overflow-y: auto; max-height: 190px; min-height: 110px; flex-grow: 1; margin-top: 0.25rem; width: 100%;">
+            <div style="text-align: center; color: hsl(var(--text-muted)); font-size: 0.78rem; padding: 1.5rem 0;">
+              Chưa có lịch sử làm bài.
+            </div>
+          </div>
+        </section>
+
+      </div>
+
+      <!-- Cột Phải: Vùng hiển thị Kết quả & Đồ thị -->
+      <section class="main-results-area" style="display: flex; flex-direction: column; gap: 1.5rem; width: 100%;">
+
+        <!-- Tabs kết quả (Ẩn nút Tab để tránh lỗi JS nhưng vẫn tồn tại trong DOM để app.js không crash) -->
+        <div class="results-header-tabs" style="display: none !important;">
+          <button id="resultTabBtnSteps" class="result-tab-trigger active" style="display: none !important;"></button>
+          <button id="resultTabBtnGraph" class="result-tab-trigger" style="display: none !important;"></button>
+        </div>
+
+        <!-- Tiêu đề in báo cáo học thuật (Chỉ hiển thị khi in) -->
+        <div class="print-report-header" style="display: none;">
+          <h1
+            style="font-size: 18pt; font-weight: 700; margin-bottom: 1.5rem; text-align: center; text-transform: uppercase; color: #000000; font-family: 'Outfit', sans-serif; border-bottom: 2px double #000000; padding-bottom: 0.75rem;">
+            LỜI GIẢI BÀI TOÁN QUY HOẠCH TUYẾN TÍNH</h1>
+        </div>
+
+        <!-- Trạng thái trống (Chưa giải) - giờ là 1 glass-panel độc lập đẹp mắt -->
+        <div id="emptyState" class="empty-results-state glass-panel" style="padding: 4rem 2rem; width: 100%;">
+          <svg class="empty-results-icon" xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24"
+            fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10" />
+            <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3" />
+            <line x1="12" x2="12.01" y1="17" y2="17" />
+          </svg>
+          <h3 style="font-weight: 600; font-size: 1.1rem; color: hsl(var(--text-primary)); margin-top: 1rem;">Chưa có
+            kết quả tính toán</h3>
+          <p style="font-size: 0.85rem; color: hsl(var(--text-muted)); margin-top: 0.5rem;">Nhập đề bài ở bảng bên trái
+            và nhấn nút "GIẢI BÀI TOÁN" để xem kết quả.</p>
+        </div>
+
+        <!-- Trạng thái Loading - giờ là 1 glass-panel độc lập -->
+        <div id="loadingState" class="glass-panel"
+          style="display: none; flex-direction: column; align-items: center; justify-content: center; padding: 6rem 2rem; gap: 1rem; color: hsl(var(--text-secondary)); width: 100%;">
+          <svg class="animate-spin" style="color: #bd162c;" xmlns="http://www.w3.org/2000/svg" width="42" height="42"
+            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"
+            stroke-linejoin="round">
+            <path d="M21 12a9 9 0 1 1-6.219-8.56" />
+          </svg>
+          <p style="font-size: 0.9rem; font-weight: 500;">Đang xử lý...</p>
+        </div>
+
+        <!-- Trạng thái Lỗi - giờ là 1 glass-panel độc lập -->
+        <div id="errorState" class="glass-panel"
+          style="display: none; gap: 0.75rem; background: hsla(var(--accent-rose) / 0.12); border: 1px solid hsla(var(--accent-rose) / 0.3); padding: 1.5rem; border-radius: var(--radius-lg); color: hsl(var(--accent-rose)); width: 100%;">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10" />
+            <line x1="12" x2="12" y1="8" y2="12" />
+            <line x1="12" x2="12.01" y1="16" y2="16" />
+          </svg>
+          <div>
+            <h4 style="font-weight: 600; font-size: 0.95rem; margin-bottom: 2px;">Không thể giải bài toán</h4>
+            <p id="errorText" style="font-size: 0.85rem; opacity: 0.9;"></p>
+          </div>
+        </div>
+
+        <!-- Tab 1: Các bước giải -->
+        <div id="stepsTabContent" style="display: none; flex-direction: column; gap: 1.5rem; width: 100%;">
+          <div
+            style="display: none !important; align-items: center; gap: 0.5rem; background: hsla(var(--accent-teal) / 0.1); border: 1px solid hsla(var(--accent-teal) / 0.2); padding: 0.75rem 1rem; border-radius: 8px; color: hsl(var(--accent-teal));">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10" />
+              <path d="m9 12 2 2 4-4" />
+            </svg>
+            <span id="solutionStatusHeader" style="font-size: 0.85rem; font-weight: 600;">Giải thành công!</span>
+          </div>
+
+          <!-- Khối hiển thị Kết luận bài toán nổi bật (Chỉ hiển thị trên App, Ẩn khi in PDF) -->
+          <div id="simplexConclusionBox" class="glass-panel"
+            style="padding: 2rem; display: flex; flex-direction: column; gap: 0.75rem; width: 100%;">
+            <div
+              style="font-size: 1.1rem; font-weight: 700; color: #bd162c; font-family: 'Outfit', sans-serif; letter-spacing: 0.5px; margin: 0; text-transform: uppercase;">
+              Kết luận:
+            </div>
+            <pre id="simplexConclusionText"
+              style="font-family: inherit; font-size: 1.33rem; font-weight: 600; line-height: 1.6; white-space: pre-wrap; margin: 0; color: hsl(var(--text-primary)); background: transparent; border: none; padding: 0; box-shadow: none;"></pre>
+          </div>
+
+          <!-- Khối gợi ý xem lời giải chi tiết đơn hình (Chỉ hiển thị trên App, Ẩn khi in PDF) -->
+          <div id="simplexPromptStepsBox" class="glass-panel animate-fade-in simplex-screen-only"
+            style="display: flex; flex-direction: column; gap: 1rem; align-items: center; justify-content: center; padding: 2.5rem 2rem; text-align: center; width: 100%;">
+            <div
+              style="width: 55px; height: 55px; border-radius: 50%; background: #fee2e2; display: flex; align-items: center; justify-content: center; margin-bottom: 0.25rem;">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                stroke="#bd162c" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z" />
+                <polyline points="14 2 14 8 20 8" />
+                <line x1="16" y1="13" x2="8" y2="13" />
+                <line x1="16" y1="17" x2="8" y2="17" />
+                <line x1="10" y1="9" x2="8" y2="9" />
+              </svg>
+            </div>
+            <p
+              style="font-size: 1.05rem; font-weight: 700; color: hsl(var(--text-primary)); margin: 0 0 0.5rem 0; font-family: 'Outfit', sans-serif;">
+              Bạn có muốn xem lời giải chi tiết không?</p>
+            <div style="display: flex; gap: 1.25rem; justify-content: center; align-items: center; width: 100%;">
+              <button id="showSimplexStepsBtn"
+                style="background: #bd162c; color: #ffffff; border-radius: 50px; padding: 0.65rem 2.75rem; font-size: 0.92rem; font-weight: 700; border: none; cursor: pointer; transition: all var(--transition-fast); box-shadow: 0 4px 10px rgba(189, 22, 44, 0.25);">
+                Có
+              </button>
+              <button id="hideSimplexStepsPromptBtn"
+                style="background: #f1ebeb; color: #5f5c5c; border-radius: 50px; padding: 0.65rem 2.75rem; font-size: 0.92rem; font-weight: 700; border: none; cursor: pointer; transition: all var(--transition-fast);">
+                Không
+              </button>
+            </div>
+          </div>
+
+          <!-- Khối hiển thị các bước giải chi tiết đơn hình (Mặc định ẩn, Chỉ hiển thị trên App, Ẩn khi in PDF) -->
+          <div id="simplexStepsDisplaySection" class="simplex-screen-only glass-panel"
+            style="display: none; flex-direction: column; gap: 0.75rem; width: 100%; margin-top: 0.25rem; padding: 2rem;">
+            <div
+              style="font-size: 0.9rem; font-weight: 700; color: #bd162c; margin-bottom: -0.25rem; font-family: 'Outfit', sans-serif; text-transform: uppercase;">
+              Các bước giải chi tiết:</div>
+            <pre id="simplexOutputCode" class="simplex-output"
+              style="border: none; background: transparent; padding: 0; margin: 0; box-shadow: none;"></pre>
+          </div>
+
+          <!-- Khối chứa các lời giải phương pháp phụ được bấm xem thêm -->
+          <div id="additionalSolutionsContainer" class="simplex-screen-only"
+            style="display: flex; flex-direction: column; gap: 1.5rem; width: 100%; margin-top: 0.25rem;"></div>
+
+          <!-- Khối gợi ý xem thử phương pháp khác (Chỉ hiển thị trên App, Ẩn khi in PDF) -->
+          <div id="alternativeMethodPromptBox" class="glass-panel animate-fade-in simplex-screen-only"
+            style="display: none; flex-direction: column; gap: 1rem; align-items: center; justify-content: center; padding: 2rem 2rem; text-align: center; width: 100%; margin-top: 1rem;">
+            <div
+              style="width: 50px; height: 50px; border-radius: 50%; background: #fee2e2; display: flex; align-items: center; justify-content: center; margin-bottom: 0.25rem;">
+              <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none"
+                stroke="#bd162c" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M16 3h5v5" />
+                <path d="M4 20L21 3" />
+                <path d="M21 16v5h-5" />
+                <path d="M15 15l6 6" />
+                <path d="M4 4l6 6" />
+              </svg>
+            </div>
+            <p id="alternativeMethodPromptText"
+              style="font-size: 1.02rem; font-weight: 700; color: hsl(var(--text-primary)); margin: 0 0 0.5rem 0; font-family: 'Outfit', sans-serif;">
+              Bạn có muốn xem thử Phương pháp đơn hình hay Phương pháp đơn hình 2 pha không?</p>
+            <div id="alternativeButtonsContainer"
+              style="display: flex; gap: 1.25rem; justify-content: center; align-items: center; flex-wrap: wrap; width: 100%;">
+              <!-- Render động các nút phương pháp khác -->
+            </div>
+          </div>
+
+
+          <!-- Khối chuyên dụng phục vụ việc in ấn học thuật (Mặc định ẩn trên App, tự động hiển thị/ẩn các khối dựa trên lựa chọn của người dùng khi in PDF) -->
+          <div id="academicPrintArea" class="simplex-print-only"
+            style="display: none; flex-direction: column; gap: 2rem; width: 100%;">
+            <!-- Kết luận đơn độc (chỉ hiện khi in mà không kèm lời giải chi tiết) -->
+            <div id="printConclusionOnlySection" style="display: none;">
+              <div
+                style="font-size: 1.1rem; font-weight: 700; color: #bd162c; font-family: 'Outfit', sans-serif; letter-spacing: 0.5px; margin: 0 0 0.5rem 0; text-transform: uppercase;">
+                Kết luận:</div>
+              <pre id="printConclusionOnlyText"
+                style="font-family: 'Consolas', monospace; font-size: 11pt; font-weight: 600; line-height: 1.6; white-space: pre-wrap; margin: 0; color: #000000; background: transparent; border: none; padding: 0; box-shadow: none;"></pre>
+            </div>
+
+            <!-- Đồ thị phương pháp hình học khi in ấn (được đưa lên đầu nếu người dùng chọn in kèm đồ thị) -->
+            <div id="printGeomSection"
+              style="display: none; flex-direction: column; align-items: center; gap: 1rem; width: 100%; text-align: center; margin-bottom: 2rem;">
+              <img id="printGeometricImage" src="" alt="Đồ thị Quy hoạch tuyến tính"
+                style="max-width: 100%; max-height: 480px; object-fit: contain; border: 1px solid #ccc; border-radius: 6px; margin: 1rem 0;">
+              <div id="printGeomLegendBox"
+                style="width: 100%; text-align: left; font-family: 'Consolas', monospace; font-size: 10pt; line-height: 1.5; color: #000; white-space: pre-wrap;">
+              </div>
+            </div>
+
+            <!-- Lời giải các phương pháp đơn hình khi in ấn -->
+            <div id="printSimplexSection" style="display: none; flex-direction: column; gap: 1.5rem; width: 100%;">
+            </div>
+            <div id="printBlandSection" style="display: none; flex-direction: column; gap: 1.5rem; width: 100%;"></div>
+            <div id="printTwoPhaseSection" style="display: none; flex-direction: column; gap: 1.5rem; width: 100%;">
+            </div>
+          </div>
+        </div>
+
+        <!-- Tab 2: Đồ thị hình học -->
+        <div id="graphTabContent" class="geometric-graph-container"
+          style="display: none; flex-direction: column; align-items: center; gap: 1.5rem; width: 100%;">
+
+          <!-- Khối 1: Hỏi xem hình vẽ -->
+          <div id="geomPromptGraphBox" class="glass-panel animate-fade-in"
+            style="display: flex; flex-direction: column; gap: 1.5rem; align-items: center; justify-content: center; padding: 2.5rem 2rem; text-align: center; width: 100%;">
+            <p
+              style="font-size: 1.05rem; font-weight: 700; color: hsl(var(--text-primary)); margin: 0; font-family: 'Outfit', sans-serif;">
+              Bạn có muốn xem hình vẽ không?</p>
+            <button id="showGeomGraphBtn"
+              style="display: inline-flex; align-items: center; gap: 0.5rem; justify-content: center; background: #bd162c; color: #ffffff; border-radius: 50px; padding: 0.65rem 2.25rem; font-size: 0.92rem; font-weight: 700; border: none; cursor: pointer; transition: all var(--transition-fast); box-shadow: 0 4px 12px rgba(189, 22, 44, 0.25); text-transform: uppercase; letter-spacing: 0.5px;">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="18" y1="20" x2="18" y2="10" />
+                <line x1="12" y1="20" x2="12" y2="4" />
+                <line x1="6" y1="20" x2="6" y2="14" />
+              </svg>
+              Xem đồ thị bài toán
+            </button>
+          </div>
+
+          <!-- Khối 2: Hiển thị hình vẽ & chú giải (Mặc định ẩn) -->
+          <div id="geomGraphDisplaySection" class="glass-panel"
+            style="display: none; flex-direction: column; align-items: center; gap: 1.25rem; width: 100%; padding: 2rem;">
+
+            <div id="geomGraphZoomContainer"
+              style="width: 100%; max-width: 850px; height: 650px; overflow: hidden; border-radius: var(--radius-md); box-shadow: var(--shadow-md); position: relative; background: #fff;">
+              <canvas id="geomCanvas" style="width: 100%; height: 100%; display: block; cursor: grab;"></canvas>
+            </div>
+
+            <!-- Hộp chú giải động do Javascript render ở dưới hình -->
+            <div id="geomGraphLegendBox"
+              style="width: 100%; max-width: 850px; display: flex; flex-direction: column; gap: 1rem;"></div>
+          </div>
+
+        </div>
+
+        <!-- Dòng điều khiển cuối trang (Quay lại & Xuất PDF) -->
+        <div class="simplex-screen-only"
+          style="display: flex; justify-content: center; align-items: center; width: 100%; margin-top: 1rem; margin-bottom: 0.5rem;">
+
+          <!-- Nút Quay Lại với hiệu ứng Hover FUI Premium -->
+          <button id="backToMenuBtn" class="fui-button-hover-effect" style="margin: 0;">
+            <span class="button-circle"></span>
+            <span class="button-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="19" y1="12" x2="5" y2="12" />
+                <polyline points="12 19 5 12 12 5" />
+              </svg>
+            </span>
+            <span class="button-text">Quay lại</span>
+          </button>
+
+          <!-- Nút Xuất PDF dạng pill đỏ sẫm giống Xem biểu đồ bài toán -->
+          <button id="exportPdfBtn"
+            style="display: none; margin: 0; font-size: 0.92rem; font-weight: 700; padding: 0.65rem 2.25rem; width: auto; border-radius: 50px; box-shadow: 0 4px 12px rgba(189, 22, 44, 0.25); align-items: center; gap: 0.5rem; background: #bd162c; color: #ffffff; border: none; cursor: pointer; transition: all var(--transition-fast); text-transform: uppercase; letter-spacing: 0.5px;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+              <polyline points="7 10 12 15 17 10" />
+              <line x1="12" y1="15" x2="12" y2="3" />
+            </svg>
+            Xuất file PDF lời giải
+          </button>
+
+        </div>
+      </section>
+
+    </main>
+
+  </div>
+
+  <!-- Global Overlay Transition Loader (Facebook Style) -->
+  <div id="globalTransitionLoader"
+    style="display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: hsla(var(--bg-primary) / 0.85); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); z-index: 9999; justify-content: center; align-items: center; flex-direction: column; gap: 1.5rem;"
+    class="animate-fade-in">
+    <div class="fui-loading-facebook">
+      <div></div>
+      <div></div>
+      <div></div>
+    </div>
+  </div>
+
+  <!-- Modal chọn phương pháp in PDF -->
+  <div id="printConfigModal" class="modal-overlay"
+    style="display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0, 0, 0, 0.45); backdrop-filter: blur(8px); z-index: 9999; align-items: center; justify-content: center;">
+    <div class="glass-panel"
+      style="width: 90%; max-width: 380px; padding: 2.25rem 1.75rem; display: flex; flex-direction: column; gap: 1.55rem; border-radius: 28px; box-shadow: var(--shadow-lg); align-items: center; text-align: center;">
+
+      <!-- Icon PDF đỏ sẫm ở đầu -->
+      <div class="print-pdf-icon-bg"
+        style="display: flex; align-items: center; justify-content: center; width: 56px; height: 56px; border-radius: 16px;">
+        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#bd162c"
+          stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+          <polyline points="14 2 14 8 20 8"></polyline>
+          <line x1="16" y1="13" x2="8" y2="13"></line>
+          <line x1="16" y1="17" x2="8" y2="17"></line>
+          <polyline points="10 9 9 9 8 9"></polyline>
+        </svg>
+      </div>
+
+      <!-- Tiêu đề lớn -->
+      <h3
+        style="font-family: 'Outfit', sans-serif; font-size: 1.4rem; font-weight: 700; color: hsl(var(--text-primary)); margin: 0;">
+        Tùy chọn File PDF</h3>
+
+      <!-- Hộp chứa các thẻ checkbox cao cấp -->
+      <div style="display: flex; flex-direction: column; gap: 0.85rem; width: 100%; margin: 0.25rem 0;">
+
+        <!-- Thẻ Checkbox Phương pháp Đơn hình -->
+        <label class="fui-checkbox-card" id="printOptSimplexWrapper" style="display: none;">
+          <div class="input-wrap">
+            <input type="checkbox" id="printOptSimplex" class="input-checkbox" checked>
+            <span class="check-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round"
+                stroke-linejoin="round">
+                <polyline points="20 6 9 17 4 12"></polyline>
+              </svg>
+            </span>
+          </div>
+          <span class="label">Phương pháp Đơn hình</span>
+        </label>
+
+        <!-- Thẻ Checkbox Phương pháp Bland -->
+        <label class="fui-checkbox-card" id="printOptBlandWrapper" style="display: none;">
+          <div class="input-wrap">
+            <input type="checkbox" id="printOptBland" class="input-checkbox" checked>
+            <span class="check-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round"
+                stroke-linejoin="round">
+                <polyline points="20 6 9 17 4 12"></polyline>
+              </svg>
+            </span>
+          </div>
+          <span class="label">Phương pháp Bland</span>
+        </label>
+
+        <!-- Thẻ Checkbox Phương pháp Đơn hình 2 pha -->
+        <label class="fui-checkbox-card" id="printOptTwoPhaseWrapper" style="display: none;">
+          <div class="input-wrap">
+            <input type="checkbox" id="printOptTwoPhase" class="input-checkbox" checked>
+            <span class="check-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round"
+                stroke-linejoin="round">
+                <polyline points="20 6 9 17 4 12"></polyline>
+              </svg>
+            </span>
+          </div>
+          <span class="label">Phương pháp Đơn hình 2 pha</span>
+        </label>
+
+        <!-- Thẻ Checkbox Phương pháp Hình học -->
+        <label class="fui-checkbox-card" id="printOptGeomWrapper" style="display: none;">
+          <div class="input-wrap">
+            <input type="checkbox" id="printOptGeom" class="input-checkbox" checked>
+            <span class="check-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round"
+                stroke-linejoin="round">
+                <polyline points="20 6 9 17 4 12"></polyline>
+              </svg>
+            </span>
+          </div>
+          <span class="label">Phương pháp Hình học</span>
+        </label>
+      </div>
+
+      <!-- Nút hành động ngang nhau -->
+      <div style="display: flex; gap: 0.85rem; width: 100%; margin-top: 0.5rem;">
+        <!-- Nút Hủy Bỏ -->
+        <button id="closePrintModalBtn"
+          style="flex: 1; height: 48px; border-radius: 14px; font-family: 'Outfit', sans-serif; font-weight: 700; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.5px; border: 1.5px solid var(--glass-border); background: transparent; color: hsl(var(--text-secondary)); cursor: pointer; transition: all var(--transition-fast) ease;">
+          Hủy bỏ
+        </button>
+        <!-- Nút In PDF kèm Icon Máy in -->
+        <button id="confirmPrintBtn"
+          style="flex: 1; height: 48px; display: inline-flex; align-items: center; justify-content: center; gap: 0.4rem; border-radius: 14px; font-family: 'Outfit', sans-serif; font-weight: 700; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.5px; border: none; background: #bd162c; color: #ffffff; cursor: pointer; transition: all var(--transition-fast) ease; box-shadow: 0 4px 14px rgba(189, 22, 44, 0.3);">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="6 9 6 2 18 2 18 9"></polyline>
+            <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path>
+            <rect x="6" y="14" width="12" height="8"></rect>
+          </svg>
+          In PDF
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Liên kết Javascript điều khiển -->
+  <script src="desmos_graph.js"></script>
+  <script src="app.js"></script>
+</body>
+
+</html>
