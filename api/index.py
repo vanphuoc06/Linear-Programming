@@ -12,9 +12,8 @@ from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field
 from typing import List, Optional
 
-# Sử dụng thuật toán từ QHTT/ — pipeline giống hệt gui_server.py
 from QHTT.solver_compat import SimplexSolverCompat as SimplexSolver
-from QHTT.solver_compat import GraphicalSolverCompat as GraphicalSolver
+from QHTT.graphical_solver_compat import GraphicalSolverCompat as GraphicalSolver
 
 app = FastAPI(title="LP Solver API", version="1.0.0")
 
