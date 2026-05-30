@@ -10,14 +10,14 @@
       "use": "@vercel/next"
     }
   ],
-  "routes": [
+  "rewrites": [
     {
-      "src": "/api/(.*)",
-      "dest": "Linear-Programming-master/api/main.py"
+      "source": "/api/(.*)",
+      "destination": "/Linear-Programming-master/api/main.py"
     },
     {
-      "src": "/(.*)",
-      "dest": "Linear-Programming-master/frontend/$1"
+      "source": "/(.*)",
+      "destination": "/Linear-Programming-master/frontend/$1"
     }
   ]
 }

@@ -251,3 +251,8 @@ try:
 except ImportError:
     # Nếu mangum chưa được cài (môi trường dev local), bỏ qua
     handler = None
+
+if __name__ == "__main__":
+    import uvicorn
+    # Chạy local server trên cổng 8000
+    uvicorn.run("main:app", host="0.0.0.0", port=8000, reload=True)
