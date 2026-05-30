@@ -21,7 +21,6 @@ export default function InputForm({ onResult, setLoading, loading, method, setMe
     { coeffs: [3, 2], type: "<=", rhs: 18 },
   ]);
   const [errors, setErrors] = useState<string[]>([]);
-  const [showExamples, setShowExamples] = useState(false);
 
   // ── Helpers ──────────────────────────────────────────────────────────────
 
