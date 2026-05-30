@@ -76,60 +76,119 @@ def _build_standard_input(c_orig, constraints, objective, bounds):
     n = len(c_orig)
     is_max = (objective == "max")
 
-    # 1. Tên biến gốc
-    actual_vars = [f"x{j+1}" for j in range(n)]
-    var_mapping = {v: [(v, Fraction(1))] for v in actual_vars}
-    var_consts  = {v: Fraction(0) for v in actual_vars}
-
-    # 2. Hàm mục tiêu — QHTT giải MIN, nếu max thì đảo dấu
+    # 1. Hàm mục tiêu — QHTT giải MIN, nếu max thì đảo dấu
     c_raw = [_frac(ci) for ci in c_orig]
     if is_max:
-        c_arr = [-ci for ci in c_raw]
+        c_base = [-ci for ci in c_raw]
     else:
-        c_arr = list(c_raw)
+        c_base = list(c_raw)
 
-    # 3. Ràng buộc chính
+    # Đọc bounds gốc
+    bounds_list = bounds if bounds else [[0, None] for _ in range(n)]
+
+    # 2. Xử lý phép thế biến (substitutions)
+    actual_vars = []
+    var_mapping = {}
+    var_consts = {}
+    
+    new_c_arr = []
+    # Khởi tạo ma trận A mới, tạm thời để rỗng các cột
+    new_A_cols = [] 
+    
+    zeta_offset = Fraction(0)
+    b_offsets = [Fraction(0)] * len(constraints)
+    
+    # Biến phụ cho các constraint upper bound
+    upper_bounds = []
+
+    for j in range(n):
+        orig_var = f"x{j+1}"
+        lo, hi = bounds_list[j]
+        c_j = c_base[j]
+        col_j = [_frac(con["coeffs"][j]) for con in constraints]
+        
+        # TH1: x_j >= 0 (Chuẩn)
+        if lo == 0 and hi is None:
+            actual_vars.append(orig_var)
+            var_mapping[orig_var] = [(orig_var, Fraction(1))]
+            var_consts[orig_var] = Fraction(0)
+            
+            new_c_arr.append(c_j)
+            new_A_cols.append(col_j)
+            
+        # TH2: x_j <= 0 (Tương đương lo is None, hi == 0)
+        elif lo is None and hi == 0:
+            new_var = f"x{j+1}'"
+            actual_vars.append(new_var)
+            var_mapping[orig_var] = [(new_var, Fraction(-1))]
+            var_consts[orig_var] = Fraction(0)
+            
+            new_c_arr.append(-c_j)
+            new_A_cols.append([-a for a in col_j])
+            
+        # TH3: x_j tùy ý (Free variable: lo is None, hi is None)
+        elif lo is None and hi is None:
+            v1 = f"x{j+1}'"
+            v2 = f"x{j+1}''"
+            actual_vars.extend([v1, v2])
+            var_mapping[orig_var] = [(v1, Fraction(1)), (v2, Fraction(-1))]
+            var_consts[orig_var] = Fraction(0)
+            
+            new_c_arr.extend([c_j, -c_j])
+            new_A_cols.extend([col_j, [-a for a in col_j]])
+            
+        # TH4: x_j >= lo (hoặc x_j trong [lo, hi])
+        else:
+            new_var = f"{orig_var}'" if (lo is not None and lo != 0) else orig_var
+            actual_vars.append(new_var)
+            
+            offset = _frac(lo) if lo is not None else Fraction(0)
+            
+            var_mapping[orig_var] = [(new_var, Fraction(1))]
+            var_consts[orig_var] = offset
+            
+            # x_j = x_j' + offset
+            new_c_arr.append(c_j)
+            new_A_cols.append(col_j)
+            
+            # Cập nhật hằng số
+            zeta_offset += c_j * offset
+            for i in range(len(constraints)):
+                b_offsets[i] += col_j[i] * offset
+                
+            # Nếu có cận trên, thêm ràng buộc phụ: x_j' <= hi - offset
+            if hi is not None:
+                upper_bounds.append((len(actual_vars) - 1, _frac(hi) - offset))
+
+    # 3. Tạo ma trận A và b cho các ràng buộc gốc
     A = []
     b = []
-
-    for con in constraints:
-        a_row = [_frac(ai) for ai in con["coeffs"]]
-        rhs   = _frac(con["rhs"])
-        t     = con["type"]
-
+    for i, con in enumerate(constraints):
+        t = con["type"]
+        rhs = _frac(con["rhs"]) - b_offsets[i]
+        
+        row = [new_A_cols[col_idx][i] for col_idx in range(len(new_A_cols))]
+        
         if t == "<=":
-            A.append(list(a_row))
+            A.append(row)
             b.append(rhs)
         elif t == ">=":
-            # Nhân -1: ax >= b  <=>  -ax <= -b
-            A.append([-ai for ai in a_row])
+            A.append([-a for a in row])
             b.append(-rhs)
         elif t == "=":
-            # Tách thành 2 ràng buộc <=
-            A.append(list(a_row))
+            A.append(list(row))
             b.append(rhs)
-            A.append([-ai for ai in a_row])
+            A.append([-a for a in row])
             b.append(-rhs)
 
-    # 4. Bounds (ngoài [0, None] mặc định)
-    if bounds:
-        for j, bnd in enumerate(bounds):
-            lo, hi = bnd[0], bnd[1]
-            # lo != 0 hoặc lo is None → thêm ràng buộc
-            if lo is not None and lo != 0:
-                # x_{j+1} >= lo  <=>  -x_{j+1} <= -lo
-                row = [Fraction(0)] * n
-                row[j] = Fraction(-1)
-                A.append(row)
-                b.append(-_frac(lo))
-            if hi is not None:
-                # x_{j+1} <= hi
-                row = [Fraction(0)] * n
-                row[j] = Fraction(1)
-                A.append(row)
-                b.append(_frac(hi))
+    # 4. Thêm các ràng buộc upper bound
+    for col_idx, max_val in upper_bounds:
+        row = [Fraction(0)] * len(actual_vars)
+        row[col_idx] = Fraction(1)
+        A.append(row)
+        b.append(max_val)
 
-    return c_arr, A, b, actual_vars, var_mapping, var_consts, is_max
+    return new_c_arr, A, b, actual_vars, var_mapping, var_consts, is_max, zeta_offset
 
 
 # ─── SimplexSolverCompat ─────────────────────────────────────────────────────
@@ -172,7 +231,7 @@ class SimplexSolverCompat:
                     )
 
         # Xây dựng input cho QHTT
-        c_arr, A, b, actual_vars, var_mapping, var_consts, is_max = \
+        c_arr, A, b, actual_vars, var_mapping, var_consts, is_max, zeta_offset = \
             _build_standard_input(self.c, self.constraints, self.objective, self.bounds)
 
         # Chọn phương thức
@@ -200,10 +259,10 @@ class SimplexSolverCompat:
                 verbose=True,
                 method=qhtt_method,
                 is_max=is_max,
-                original_vars=actual_vars,
+                original_vars=[f"x{i+1}" for i in range(len(self.c))],
                 force_two_phase=force_two_phase,
                 var_consts=var_consts,
-                zeta_offset=Fraction(0)
+                zeta_offset=zeta_offset
             )
 
             # Lấy kết luận nếu thành công
@@ -234,8 +293,8 @@ class SimplexSolverCompat:
             if any(v == Fraction(0) for v in solver_obj.c):
                 self.status = "multiple"
 
-        # Bước text (dùng từng dòng làm step)
-        self.steps = self._build_steps(full_text)
+        # Bước text (dùng từng dòng làm step) và trích xuất point_coords
+        self.steps = self._build_steps(full_text, len(actual_vars))
 
         # Thông điệp kết luận
         msg = self._make_message(res, is_max)
@@ -349,21 +408,59 @@ class SimplexSolverCompat:
             else:
                 self.solution[f"x{j+1}"] = "0"
 
-    def _build_steps(self, text: str):
-        """Chuyển output text của QHTT thành list steps."""
+    def _build_steps(self, text: str, n_vars: int):
+        """Chuyển output text của QHTT thành list steps, đồng thời parse point_coords."""
+        import re
+        from tien_ich import to_subscript
+        
         steps = []
         lines = text.split("\n")
         current_block = []
 
+        def process_block(block_lines):
+            block_text = "\n".join(block_lines)
+            step_dict = {"note": block_text}
+            
+            # Nếu block chứa bảng đơn hình (có đường gạch ngang)
+            if "──" in block_text:
+                # Phân tích tìm biến cơ sở và hằng số
+                # Pattern: {var_name} = {constant} ...
+                basic_vars_vals = {}
+                for line in block_lines:
+                    line_clean = line.strip().lstrip('←').strip()
+                    # Tìm dạng: "x₁ = 5 - ..." hoặc "w₁ = 2 + ..."
+                    match = re.match(r'^([a-zA-Z]+[₀-₉]+)\s*=\s*(-?\s*\d+(?:\.\d+)?(?:/\d+)?)', line_clean)
+                    if match:
+                        var = match.group(1)
+                        # Loại bỏ khoảng trắng giữa dấu trừ và số nếu có
+                        val_str = match.group(2).replace(' ', '')
+                        try:
+                            basic_vars_vals[var] = float(Fraction(val_str))
+                        except Exception:
+                            basic_vars_vals[var] = 0.0
+
+                # Lấy tọa độ của các biến quyết định x₁, x₂, ..., xₙ
+                coords = []
+                for i in range(1, n_vars + 1):
+                    var_sub = to_subscript(f"x{i}")
+                    # Nếu biến quyết định nằm trong cơ sở, lấy giá trị hằng số, ngược lại = 0
+                    val = basic_vars_vals.get(var_sub, 0.0)
+                    coords.append(val)
+                
+                step_dict["point_coords"] = coords
+                step_dict["point_str"] = f"x({', '.join(str(round(c, 4)) for c in coords)})"
+
+            steps.append(step_dict)
+
         for line in lines:
             if line.strip() == "" and current_block:
-                steps.append({"note": "\n".join(current_block)})
+                process_block(current_block)
                 current_block = []
             else:
                 current_block.append(line)
 
         if current_block:
-            steps.append({"note": "\n".join(current_block)})
+            process_block(current_block)
 
         return steps
 

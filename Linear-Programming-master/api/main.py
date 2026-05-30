@@ -6,13 +6,17 @@ import os
 import sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+# Add parent directory to path to import QHTT modules
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field
 from typing import List, Optional
-from solver import SimplexSolver
-from graphical_solver import GraphicalSolver
+
+# Sử dụng thuật toán từ QHTT/ thay vì api/
+from QHTT.solver_compat import SimplexSolverCompat as SimplexSolver
+from QHTT.graphical_solver_compat import GraphicalSolverCompat as GraphicalSolver
 
 app = FastAPI(title="LP Solver API", version="1.0.0")
 
