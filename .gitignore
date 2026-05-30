@@ -1,0 +1,28 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.Python
+*.egg-info/
+dist/
+build/
+.venv/
+venv/
+env/
+
+# Vercel
+.vercel
+
+# Environment
+.env
+.env.local
+.env.production
+
+# Node / Next.js (nếu build từ root)
+node_modules/
+.next/
+out/
+
+# macOS
+.DS_Store
