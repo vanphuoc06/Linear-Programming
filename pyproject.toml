@@ -1,2 +1,2 @@
 [tool.vercel]
-entrypoint = "Linear-Programming-master.api.main:app"
+entrypoint = "Linear-Programming-master.frontend.api.index:app"
